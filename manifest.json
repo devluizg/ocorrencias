@@ -2,13 +2,13 @@
     "name": "Ocorrências Escolar",
     "short_name": "Ocorrencias",
     "description": "Sistema de registro de ocorrências escolares",
-    "start_url": "/",
+    "start_url": "./",
     "display": "standalone",
-    "background_color": "#f1f5f9",
-    "theme_color": "#2563eb",
+    "background_color": "#f8f9fa",
+    "theme_color": "#0040a1",
     "icons": [
         {
-            "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>",
+            "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230040a1'/><text y='.7em' x='50%' text-anchor='middle' font-size='50' fill='white'>📋</text></svg>",
             "sizes": "any",
             "type": "image/svg+xml"
         }
