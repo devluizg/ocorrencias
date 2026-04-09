@@ -3,15 +3,22 @@
     "short_name": "Ocorrencias",
     "description": "Sistema de registro de ocorrências escolares",
     "start_url": "/ocorrencias/",
-    "display": "standalone",
     "scope": "/ocorrencias/",
+    "display": "standalone",
     "background_color": "#f8f9fa",
     "theme_color": "#0040a1",
     "icons": [
         {
-            "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230040a1'/><text y='.7em' x='50%' text-anchor='middle' font-size='50' fill='white'>📋</text></svg>",
-            "sizes": "any",
-            "type": "image/svg+xml"
+            "src": "/ocorrencias/icons/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/ocorrencias/icons/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
         }
     ]
 }

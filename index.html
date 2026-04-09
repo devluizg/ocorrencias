@@ -6,7 +6,7 @@
     <title>Ocorrencias Escolar</title>
     <meta name="theme-color" content="#0040a1">
     <meta name="description" content="Sistema de registro de ocorrências escolares">
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/ocorrencias/manifest.json">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
     
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -1222,7 +1222,9 @@
         document.addEventListener('DOMContentLoaded', init);
 
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').catch(() => {});
+            navigator.serviceWorker.register('/ocorrencias/sw.js', {
+                scope: '/ocorrencias/'
+            }).catch(() => {});
         }
     </script>
 </body>
