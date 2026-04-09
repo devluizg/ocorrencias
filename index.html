@@ -209,7 +209,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         // Variáveis globais
-        let supabase = null;
+        let dbClient = null;
         let occurrences = [];
         const STORAGE_KEY = 'ocorrencias_escolar';
 
@@ -242,7 +242,7 @@
 
         // ============ SUPABASE ============
         async function loadOccurrences() {
-            if (supabase) {
+            if (dbClient) {
                 const { data, error } = await supabase.from('occurrences').select('*').order('created_at', { ascending: false });
                 if (error) {
                     const local = localStorage.getItem(STORAGE_KEY);
@@ -261,8 +261,8 @@
         }
 
         async function saveOccurrence(occurrence) {
-            if (supabase) {
-                const { error } = await supabase.from('occurrences').insert([{
+            if (dbClient) {
+                const { error } = await dbClient.from('occurrences').insert([{
                     student_name: occurrence.studentName, class: occurrence.class, type: occurrence.type,
                     gravity: occurrence.gravity, description: occurrence.description || null, teacher: occurrence.teacher
                 }]);
@@ -441,7 +441,7 @@
         async function init() {
             const hasConfig = await loadConfig();
             if (typeof SUPABASE_URL !== 'undefined' && typeof SUPABASE_KEY !== 'undefined') {
-                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+                dbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
             }
             setupTabs();
             setupForm();
