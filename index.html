@@ -22,427 +22,66 @@
             --gray: #94a3b8;
             --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-
-        body {
-            background: var(--light);
-            min-height: 100vh;
-            padding-bottom: 80px;
-        }
-
-        header {
-            background: var(--primary);
-            color: var(--white);
-            padding: 1rem;
-            text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: var(--shadow);
-        }
-
-        header h1 {
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-
-        .tab-nav {
-            display: flex;
-            background: var(--white);
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            box-shadow: 0 -2px 10px rgb(0 0 0 / 0.1);
-            z-index: 100;
-        }
-
-        .tab-btn {
-            flex: 1;
-            padding: 1rem;
-            border: none;
-            background: none;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--gray);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .tab-btn.active {
-            color: var(--primary);
-            border-top: 3px solid var(--primary);
-            background: #eff6ff;
-        }
-
-        .tab-content {
-            display: none;
-            padding: 1rem;
-            animation: fadeIn 0.3s;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .card {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 1.25rem;
-            margin-bottom: 1rem;
-            box-shadow: var(--shadow);
-        }
-
-        .card-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 1rem;
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        label {
-            display: block;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--dark);
-            margin-bottom: 0.5rem;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 0.875rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.2s;
-            background: var(--white);
-        }
-
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 1rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: var(--white);
-        }
-
-        .btn-primary:active {
-            background: var(--primary-dark);
-            transform: scale(0.98);
-        }
-
-        .btn-secondary {
-            background: var(--light);
-            color: var(--dark);
-            margin-top: 0.5rem;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background: var(--light); min-height: 100vh; padding-bottom: 80px; }
+        header { background: var(--primary); color: var(--white); padding: 1rem; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); }
+        header h1 { font-size: 1.25rem; font-weight: 600; }
+        .tab-nav { display: flex; background: var(--white); position: fixed; bottom: 0; left: 0; right: 0; box-shadow: 0 -2px 10px rgb(0 0 0 / 0.1); z-index: 100; }
+        .tab-btn { flex: 1; padding: 1rem; border: none; background: none; font-size: 0.875rem; font-weight: 500; color: var(--gray); cursor: pointer; transition: all 0.2s; }
+        .tab-btn.active { color: var(--primary); border-top: 3px solid var(--primary); background: #eff6ff; }
+        .tab-content { display: none; padding: 1rem; animation: fadeIn 0.3s; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .card { background: var(--white); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; box-shadow: var(--shadow); }
+        .card-title { font-size: 1.125rem; font-weight: 600; color: var(--dark); margin-bottom: 1rem; }
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; font-size: 0.875rem; font-weight: 500; color: var(--dark); margin-bottom: 0.5rem; }
+        input, select, textarea { width: 100%; padding: 0.875rem; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; transition: border-color 0.2s; background: var(--white); }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); }
+        .btn { display: block; width: 100%; padding: 1rem; border: none; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+        .btn-primary { background: var(--primary); color: var(--white); }
+        .btn-primary:active { background: var(--primary-dark); transform: scale(0.98); }
+        .btn-secondary { background: var(--light); color: var(--dark); margin-top: 0.5rem; }
+        .badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
         .badge-leve { background: #dcfce7; color: #166534; }
         .badge-medio { background: #fef3c7; color: #92400e; }
         .badge-grave { background: #fee2e2; color: #991b1b; }
-
-        .filters {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .filters select, .filters input {
-            flex: 1;
-            min-width: 140px;
-        }
-
-        .occurrence-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .occurrence-item {
-            background: var(--white);
-            border-radius: 10px;
-            padding: 1rem;
-            box-shadow: var(--shadow);
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .occurrence-item:active {
-            transform: scale(0.98);
-        }
-
-        .occurrence-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .occurrence-date {
-            font-size: 0.75rem;
-            color: var(--gray);
-        }
-
-        .occurrence-student {
-            font-weight: 600;
-            color: var(--dark);
-            font-size: 1rem;
-        }
-
-        .occurrence-type {
-            font-size: 0.875rem;
-            color: var(--secondary);
-        }
-
-        .occurrence-details {
-            display: none;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid #e2e8f0;
-        }
-
-        .occurrence-details.show {
-            display: block;
-        }
-
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-        }
-
-        .detail-label {
-            color: var(--gray);
-        }
-
-        .detail-value {
-            color: var(--dark);
-            font-weight: 500;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .stat-card {
-            background: var(--white);
-            border-radius: 10px;
-            padding: 1rem;
-            text-align: center;
-            box-shadow: var(--shadow);
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            display: block;
-        }
-
-        .stat-label {
-            font-size: 0.75rem;
-            color: var(--gray);
-        }
-
+        .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+        .filters select, .filters input { flex: 1; min-width: 140px; }
+        .occurrence-list { display: flex; flex-direction: column; gap: 0.75rem; }
+        .occurrence-item { background: var(--white); border-radius: 10px; padding: 1rem; box-shadow: var(--shadow); cursor: pointer; transition: transform 0.2s; }
+        .occurrence-item:active { transform: scale(0.98); }
+        .occurrence-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+        .occurrence-date { font-size: 0.75rem; color: var(--gray); }
+        .occurrence-student { font-weight: 600; color: var(--dark); font-size: 1rem; }
+        .occurrence-type { font-size: 0.875rem; color: var(--secondary); }
+        .occurrence-details { display: none; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0; }
+        .occurrence-details.show { display: block; }
+        .detail-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.875rem; }
+        .detail-label { color: var(--gray); }
+        .detail-value { color: var(--dark); font-weight: 500; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; }
+        .stat-card { background: var(--white); border-radius: 10px; padding: 1rem; text-align: center; box-shadow: var(--shadow); }
+        .stat-number { font-size: 2rem; font-weight: 700; display: block; }
+        .stat-label { font-size: 0.75rem; color: var(--gray); }
         .stat-leve .stat-number { color: #166534; }
         .stat-medio .stat-number { color: #92400e; }
         .stat-grave .stat-number { color: #991b1b; }
-
-        .timeline {
-            position: relative;
-            padding-left: 1.5rem;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: #e2e8f0;
-        }
-
-        .timeline-item {
-            position: relative;
-            margin-bottom: 1rem;
-            padding: 1rem;
-            background: var(--light);
-            border-radius: 8px;
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -1.5rem;
-            top: 1rem;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--primary);
-            border: 2px solid var(--white);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 2rem;
-            color: var(--gray);
-        }
-
-        .empty-state svg {
-            width: 64px;
-            height: 64px;
-            margin-bottom: 1rem;
-            opacity: 0.5;
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--dark);
-            color: var(--white);
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 500;
-            z-index: 200;
-            animation: slideUp 0.3s;
-        }
-
-        @keyframes slideUp {
-            from { transform: translateX(-50%) translateY(20px); opacity: 0; }
-            to { transform: translateX(-50%) translateY(0); opacity: 1; }
-        }
-
-        .student-link {
-            color: var(--primary);
-            text-decoration: underline;
-            cursor: pointer;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 150;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-        }
-
-        .modal.show {
-            display: flex;
-        }
-
-        .modal-content {
-            background: var(--white);
-            border-radius: 12px;
-            padding: 1.5rem;
-            width: 100%;
-            max-width: 400px;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .modal-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--gray);
-        }
-
-        .info-box {
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
-            border-radius: 8px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            font-size: 0.875rem;
-            color: #1e40af;
-        }
-
-        @media (min-width: 768px) {
-            body {
-                padding: 2rem;
-                padding-bottom: 2rem;
-            }
-
-            .tab-nav {
-                position: relative;
-                max-width: 600px;
-                margin: 0 auto 2rem;
-                border-radius: 12px;
-                box-shadow: var(--shadow);
-            }
-
-            .card, .occurrence-item, .stat-card {
-                max-width: 600px;
-                margin: 0 auto 1rem;
-            }
-
-            header h1 {
-                font-size: 1.5rem;
-            }
-        }
+        .timeline { position: relative; padding-left: 1.5rem; }
+        .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: #e2e8f0; }
+        .timeline-item { position: relative; margin-bottom: 1rem; padding: 1rem; background: var(--light); border-radius: 8px; }
+        .timeline-item::before { content: ''; position: absolute; left: -1.5rem; top: 1rem; width: 10px; height: 10px; border-radius: 50%; background: var(--primary); border: 2px solid var(--white); }
+        .empty-state { text-align: center; padding: 2rem; color: var(--gray); }
+        .empty-state svg { width: 64px; height: 64px; margin-bottom: 1rem; opacity: 0.5; }
+        .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: var(--dark); color: var(--white); padding: 1rem 1.5rem; border-radius: 8px; font-weight: 500; z-index: 200; animation: slideUp 0.3s; }
+        @keyframes slideUp { from { transform: translateX(-50%) translateY(20px); opacity: 0; } to { transform: translateX(-50%) translateY(0); opacity: 1; } }
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 150; align-items: center; justify-content: center; padding: 1rem; }
+        .modal.show { display: flex; }
+        .modal-content { background: var(--white); border-radius: 12px; padding: 1.5rem; width: 100%; max-width: 400px; max-height: 80vh; overflow-y: auto; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .modal-title { font-size: 1.25rem; font-weight: 600; }
+        .modal-close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--gray); }
+        @media (min-width: 768px) { body { padding: 2rem; padding-bottom: 2rem; } .tab-nav { position: relative; max-width: 600px; margin: 0 auto 2rem; border-radius: 12px; box-shadow: var(--shadow); } .card, .occurrence-item, .stat-card { max-width: 600px; margin: 0 auto 1rem; } header h1 { font-size: 1.5rem; } }
     </style>
 </head>
 <body>
@@ -465,76 +104,50 @@
                         <label for="student-name">Nome do Aluno *</label>
                         <input type="text" id="student-name" required placeholder="Digite o nome do aluno">
                     </div>
-
                     <div class="form-group">
                         <label for="class">Série/Turma *</label>
                         <select id="class" required>
                             <option value="">Selecione a turma</option>
-                            <option value="1º Ano A">1º Ano A</option>
-                            <option value="1º Ano B">1º Ano B</option>
-                            <option value="2º Ano A">2º Ano A</option>
-                            <option value="2º Ano B">2º Ano B</option>
-                            <option value="3º Ano A">3º Ano A</option>
-                            <option value="3º Ano B">3º Ano B</option>
-                            <option value="4º Ano A">4º Ano A</option>
-                            <option value="4º Ano B">4º Ano B</option>
-                            <option value="5º Ano A">5º Ano A</option>
-                            <option value="5º Ano B">5º Ano B</option>
-                            <option value="6º Ano A">6º Ano A</option>
-                            <option value="6º Ano B">6º Ano B</option>
-                            <option value="7º Ano A">7º Ano A</option>
-                            <option value="7º Ano B">7º Ano B</option>
-                            <option value="8º Ano A">8º Ano A</option>
-                            <option value="8º Ano B">8º Ano B</option>
-                            <option value="9º Ano A">9º Ano A</option>
-                            <option value="9º Ano B">9º Ano B</option>
-                            <option value="1ª Série">1ª Série</option>
-                            <option value="2ª Série">2ª Série</option>
-                            <option value="3ª Série">3ª Série</option>
+                            <option value="1º Ano A">1º Ano A</option><option value="1º Ano B">1º Ano B</option>
+                            <option value="2º Ano A">2º Ano A</option><option value="2º Ano B">2º Ano B</option>
+                            <option value="3º Ano A">3º Ano A</option><option value="3º Ano B">3º Ano B</option>
+                            <option value="4º Ano A">4º Ano A</option><option value="4º Ano B">4º Ano B</option>
+                            <option value="5º Ano A">5º Ano A</option><option value="5º Ano B">5º Ano B</option>
+                            <option value="6º Ano A">6º Ano A</option><option value="6º Ano B">6º Ano B</option>
+                            <option value="7º Ano A">7º Ano A</option><option value="7º Ano B">7º Ano B</option>
+                            <option value="8º Ano A">8º Ano A</option><option value="8º Ano B">8º Ano B</option>
+                            <option value="9º Ano A">9º Ano A</option><option value="9º Ano B">9º Ano B</option>
+                            <option value="1ª Série">1ª Série</option><option value="2ª Série">2ª Série</option><option value="3ª Série">3ª Série</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label for="type">Tipo de Ocorrência *</label>
                         <select id="type" required>
                             <option value="">Selecione o tipo</option>
-                            <option value="Atraso">Atraso</option>
-                            <option value="Falta">Falta</option>
-                            <option value="Falta de material">Falta de material</option>
-                            <option value="Não realizou tarefa">Não realizou tarefa</option>
-                            <option value="Conversa excessiva">Conversa excessiva</option>
-                            <option value="Brilhas/Conflito">Brigas/Conflito</option>
-                            <option value="Bullying/Assédio">Bullying/Assédio</option>
-                            <option value="Uso de celular">Uso de celular</option>
-                            <option value="Descumprimento de regras">Descumprimento de regras</option>
-                            <option value="Agressão verbal">Agressão verbal</option>
-                            <option value="Agressão física">Agressão física</option>
-                            <option value="Vandalismo">Vandalismo</option>
-                            <option value="Droga/Álcool">Droga/Álcool</option>
-                            <option value="Outro">Outro</option>
+                            <option value="Atraso">Atraso</option><option value="Falta">Falta</option>
+                            <option value="Falta de material">Falta de material</option><option value="Não realizou tarefa">Não realizou tarefa</option>
+                            <option value="Conversa excessiva">Conversa excessiva</option><option value="Brigas/Conflito">Brigas/Conflito</option>
+                            <option value="Bullying/Assédio">Bullying/Assédio</option><option value="Uso de celular">Uso de celular</option>
+                            <option value="Descumprimento de regras">Descumprimento de regras</option><option value="Agressão verbal">Agressão verbal</option>
+                            <option value="Agressão física">Agressão física</option><option value="Vandalismo">Vandalismo</option>
+                            <option value="Droga/Álcool">Droga/Álcool</option><option value="Outro">Outro</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label for="gravity">Nível de Gravidade *</label>
                         <select id="gravity" required>
                             <option value="">Selecione a gravidade</option>
-                            <option value="Leve">Leve</option>
-                            <option value="Médio">Médio</option>
-                            <option value="Grave">Grave</option>
+                            <option value="Leve">Leve</option><option value="Médio">Médio</option><option value="Grave">Grave</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label for="description">Descrição (opcional)</label>
                         <textarea id="description" rows="3" placeholder="Detalhes adicionais..."></textarea>
                     </div>
-
                     <div class="form-group">
                         <label for="teacher">Professor Responsável *</label>
                         <input type="text" id="teacher" required placeholder="Seu nome">
                     </div>
-
                     <button type="submit" class="btn btn-primary">Salvar Ocorrência</button>
                     <button type="button" class="btn btn-secondary" id="clear-form">Limpar Formulário</button>
                 </form>
@@ -547,33 +160,20 @@
                 <div class="filters">
                     <select id="filter-class">
                         <option value="">Todas as turmas</option>
-                        <option value="1º Ano A">1º Ano A</option>
-                        <option value="1º Ano B">1º Ano B</option>
-                        <option value="2º Ano A">2º Ano A</option>
-                        <option value="2º Ano B">2º Ano B</option>
-                        <option value="3º Ano A">3º Ano A</option>
-                        <option value="3º Ano B">3º Ano B</option>
-                        <option value="4º Ano A">4º Ano A</option>
-                        <option value="4º Ano B">4º Ano B</option>
-                        <option value="5º Ano A">5º Ano A</option>
-                        <option value="5º Ano B">5º Ano B</option>
-                        <option value="6º Ano A">6º Ano A</option>
-                        <option value="6º Ano B">6º Ano B</option>
-                        <option value="7º Ano A">7º Ano A</option>
-                        <option value="7º Ano B">7º Ano B</option>
-                        <option value="8º Ano A">8º Ano A</option>
-                        <option value="8º Ano B">8º Ano B</option>
-                        <option value="9º Ano A">9º Ano A</option>
-                        <option value="9º Ano B">9º Ano B</option>
-                        <option value="1ª Série">1ª Série</option>
-                        <option value="2ª Série">2ª Série</option>
-                        <option value="3ª Série">3ª Série</option>
+                        <option value="1º Ano A">1º Ano A</option><option value="1º Ano B">1º Ano B</option>
+                        <option value="2º Ano A">2º Ano A</option><option value="2º Ano B">2º Ano B</option>
+                        <option value="3º Ano A">3º Ano A</option><option value="3º Ano B">3º Ano B</option>
+                        <option value="4º Ano A">4º Ano A</option><option value="4º Ano B">4º Ano B</option>
+                        <option value="5º Ano A">5º Ano A</option><option value="5º Ano B">5º Ano B</option>
+                        <option value="6º Ano A">6º Ano A</option><option value="6º Ano B">6º Ano B</option>
+                        <option value="7º Ano A">7º Ano A</option><option value="7º Ano B">7º Ano B</option>
+                        <option value="8º Ano A">8º Ano A</option><option value="8º Ano B">8º Ano B</option>
+                        <option value="9º Ano A">9º Ano A</option><option value="9º Ano B">9º Ano B</option>
+                        <option value="1ª Série">1ª Série</option><option value="2ª Série">2ª Série</option><option value="3ª Série">3ª Série</option>
                     </select>
                     <select id="filter-gravity">
                         <option value="">Todas as gravidades</option>
-                        <option value="Leve">Leve</option>
-                        <option value="Médio">Médio</option>
-                        <option value="Grave">Grave</option>
+                        <option value="Leve">Leve</option><option value="Médio">Médio</option><option value="Grave">Grave</option>
                     </select>
                 </div>
                 <div class="filters">
@@ -607,14 +207,13 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/config.js"></script>
     <script>
         // Variáveis globais
         let supabase = null;
         let occurrences = [];
         const STORAGE_KEY = 'ocorrencias_escolar';
 
-        // ============ SETUP DAS ABAS (SEMPRE executa) ============
+        // ============ SETUP DAS ABAS ============
         function setupTabs() {
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -626,155 +225,108 @@
             });
         }
 
-        // ============ SUPABASE (só se config.js existir) ============
-        if (typeof SUPABASE_URL !== 'undefined' && typeof SUPABASE_KEY !== 'undefined') {
-            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-            
-            async function loadOccurrences() {
-                const { data, error } = await supabase
-                    .from('occurrences')
-                    .select('*')
-                    .order('created_at', { ascending: false });
-                
+        // ============ CARREGA CONFIG ============
+        async function loadConfig() {
+            try {
+                const response = await fetch('js/config.js');
+                if (!response.ok) throw new Error('Config not found');
+                const script = document.createElement('script');
+                script.text = await response.text();
+                document.head.appendChild(script);
+                return true;
+            } catch (e) {
+                console.log('Modo localStorage (sem Supabase)');
+                return false;
+            }
+        }
+
+        // ============ SUPABASE ============
+        async function loadOccurrences() {
+            if (supabase) {
+                const { data, error } = await supabase.from('occurrences').select('*').order('created_at', { ascending: false });
                 if (error) {
-                    console.error('Erro ao carregar:', error);
                     const local = localStorage.getItem(STORAGE_KEY);
                     occurrences = local ? JSON.parse(local) : [];
                 } else {
                     occurrences = data.map(o => ({
-                        id: o.id,
-                        studentName: o.student_name,
-                        class: o.class,
-                        type: o.type,
-                        gravity: o.gravity,
-                        description: o.description,
-                        teacher: o.teacher,
-                        date: o.created_at
+                        id: o.id, studentName: o.student_name, class: o.class, type: o.type,
+                        gravity: o.gravity, description: o.description, teacher: o.teacher, date: o.created_at
                     }));
                 }
-                renderOccurrences();
+            } else {
+                const local = localStorage.getItem(STORAGE_KEY);
+                occurrences = local ? JSON.parse(local) : [];
             }
+            renderOccurrences();
+        }
 
-            async function saveOccurrence(occurrence) {
-                const { error } = await supabase
-                    .from('occurrences')
-                    .insert([{
-                        student_name: occurrence.studentName,
-                        class: occurrence.class,
-                        type: occurrence.type,
-                        gravity: occurrence.gravity,
-                        description: occurrence.description || null,
-                        teacher: occurrence.teacher
-                    }]);
-                
-                if (error) {
-                    console.error('Erro ao salvar:', error);
-                    showToast('Erro ao salvar. Tente novamente.');
-                    return false;
-                }
-                return true;
-            }
-
-            async function setupForm() {
-                const form = document.getElementById('occurrence-form');
-                form.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    const btn = form.querySelector('.btn-primary');
-                    btn.disabled = true;
-                    btn.textContent = 'Salvando...';
-                    
-                    const occurrence = {
-                        id: Date.now(),
-                        studentName: document.getElementById('student-name').value.trim(),
-                        class: document.getElementById('class').value,
-                        type: document.getElementById('type').value,
-                        gravity: document.getElementById('gravity').value,
-                        description: document.getElementById('description').value.trim(),
-                        teacher: document.getElementById('teacher').value.trim(),
-                        date: new Date().toISOString()
-                    };
-                    
-                    const success = await saveOccurrence(occurrence);
-                    if (success) {
-                        showToast('Ocorrência salva com sucesso!');
-                        form.reset();
-                        loadOccurrences();
-                    }
-                    
-                    btn.disabled = false;
-                    btn.textContent = 'Salvar Ocorrência';
-                });
-
-                document.getElementById('clear-form').addEventListener('click', () => {
-                    form.reset();
-                });
-            }
-        } else {
-            // Sem Supabase - usa localStorage
-            function loadOccurrences() {
-                const data = localStorage.getItem(STORAGE_KEY);
-                occurrences = data ? JSON.parse(data) : [];
-                renderOccurrences();
-            }
-
-            function saveOccurrence(occurrence) {
+        async function saveOccurrence(occurrence) {
+            if (supabase) {
+                const { error } = await supabase.from('occurrences').insert([{
+                    student_name: occurrence.studentName, class: occurrence.class, type: occurrence.type,
+                    gravity: occurrence.gravity, description: occurrence.description || null, teacher: occurrence.teacher
+                }]);
+                if (error) { showToast('Erro ao salvar!'); return false; }
+            } else {
+                occurrence.id = Date.now();
+                occurrence.date = new Date().toISOString();
                 occurrences.unshift(occurrence);
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(occurrences));
-                return true;
             }
+            return true;
+        }
 
-            function setupForm() {
-                const form = document.getElementById('occurrence-form');
-                form.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const occurrence = {
-                        id: Date.now(),
-                        studentName: document.getElementById('student-name').value.trim(),
-                        class: document.getElementById('class').value,
-                        type: document.getElementById('type').value,
-                        gravity: document.getElementById('gravity').value,
-                        description: document.getElementById('description').value.trim(),
-                        teacher: document.getElementById('teacher').value.trim(),
-                        date: new Date().toISOString()
-                    };
-                    saveOccurrence(occurrence);
+        // ============ FORM ============
+        function setupForm() {
+            const form = document.getElementById('occurrence-form');
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = form.querySelector('.btn-primary');
+                btn.disabled = true;
+                btn.textContent = 'Salvando...';
+                
+                const occurrence = {
+                    studentName: document.getElementById('student-name').value.trim(),
+                    class: document.getElementById('class').value,
+                    type: document.getElementById('type').value,
+                    gravity: document.getElementById('gravity').value,
+                    description: document.getElementById('description').value.trim(),
+                    teacher: document.getElementById('teacher').value.trim()
+                };
+                
+                const success = await saveOccurrence(occurrence);
+                if (success) {
                     showToast('Ocorrência salva com sucesso!');
                     form.reset();
-                    renderOccurrences();
-                });
+                    loadOccurrences();
+                }
+                btn.disabled = false;
+                btn.textContent = 'Salvar Ocorrência';
+            });
 
-                document.getElementById('clear-form').addEventListener('click', () => {
-                    form.reset();
-                });
-            }
+            document.getElementById('clear-form').addEventListener('click', () => form.reset());
         }
 
         // ============ FILTROS ============
         function setupFilters() {
-            const filterClass = document.getElementById('filter-class');
-            const filterGravity = document.getElementById('filter-gravity');
-            const filterStudent = document.getElementById('filter-student');
-            const filterDateStart = document.getElementById('filter-date-start');
-            const filterDateEnd = document.getElementById('filter-date-end');
-
-            [filterClass, filterGravity, filterStudent, filterDateStart, filterDateEnd].forEach(el => {
-                el.addEventListener('input', renderOccurrences);
+            ['filter-class', 'filter-gravity', 'filter-student', 'filter-date-start', 'filter-date-end'].forEach(id => {
+                document.getElementById(id).addEventListener('input', renderOccurrences);
             });
         }
 
         function getFilteredOccurrences() {
-            const filterClass = document.getElementById('filter-class').value;
-            const filterGravity = document.getElementById('filter-gravity').value;
-            const filterStudent = document.getElementById('filter-student').value.toLowerCase();
-            const filterDateStart = document.getElementById('filter-date-start').value;
-            const filterDateEnd = document.getElementById('filter-date-end').value;
+            const fClass = document.getElementById('filter-class').value;
+            const fGravity = document.getElementById('filter-gravity').value;
+            const fStudent = document.getElementById('filter-student').value.toLowerCase();
+            const fDateStart = document.getElementById('filter-date-start').value;
+            const fDateEnd = document.getElementById('filter-date-end').value;
 
             return occurrences.filter(o => {
-                if (filterClass && o.class !== filterClass) return false;
-                if (filterGravity && o.gravity !== filterGravity) return false;
-                if (filterStudent && !o.studentName.toLowerCase().includes(filterStudent)) return false;
-                if (filterDateStart && o.date < filterDateStart) return false;
-                if (filterDateEnd && o.date > filterDateEnd + 'T23:59:59') return false;
+                if (fClass && o.class !== fClass) return false;
+                if (fGravity && o.gravity !== fGravity) return false;
+                if (fStudent && !o.studentName.toLowerCase().includes(fStudent)) return false;
+                if (fDateStart && o.date < fDateStart) return false;
+                if (fDateEnd && o.date > fDateEnd + 'T23:59:59') return false;
                 return true;
             });
         }
@@ -785,14 +337,7 @@
             const filtered = getFilteredOccurrences();
 
             if (filtered.length === 0) {
-                list.innerHTML = `
-                    <div class="empty-state">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                        </svg>
-                        <p>Nenhuma ocorrência encontrada</p>
-                    </div>
-                `;
+                list.innerHTML = '<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg><p>Nenhuma ocorrência encontrada</p></div>';
                 return;
             }
 
@@ -805,28 +350,11 @@
                     <div class="occurrence-type">${o.type} - ${o.class}</div>
                     <div class="occurrence-date">${formatDate(o.date)}</div>
                     <div class="occurrence-details">
-                        <div class="detail-row">
-                            <span class="detail-label">Turma:</span>
-                            <span class="detail-value">${o.class}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Tipo:</span>
-                            <span class="detail-value">${o.type}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Gravidade:</span>
-                            <span class="detail-value">${o.gravity}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Professor:</span>
-                            <span class="detail-value">${o.teacher}</span>
-                        </div>
-                        ${o.description ? `
-                        <div class="detail-row">
-                            <span class="detail-label">Descrição:</span>
-                            <span class="detail-value">${o.description}</span>
-                        </div>
-                        ` : ''}
+                        <div class="detail-row"><span class="detail-label">Turma:</span><span class="detail-value">${o.class}</span></div>
+                        <div class="detail-row"><span class="detail-label">Tipo:</span><span class="detail-value">${o.type}</span></div>
+                        <div class="detail-row"><span class="detail-label">Gravidade:</span><span class="detail-value">${o.gravity}</span></div>
+                        <div class="detail-row"><span class="detail-label">Professor:</span><span class="detail-value">${o.teacher}</span></div>
+                        ${o.description ? `<div class="detail-row"><span class="detail-label">Descrição:</span><span class="detail-value">${o.description}</span></div>` : ''}
                     </div>
                 </div>
             `).join('');
@@ -838,13 +366,7 @@
 
         function formatDate(dateStr) {
             const date = new Date(dateStr);
-            return date.toLocaleDateString('pt-BR', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
+            return date.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
         }
 
         function showToast(message) {
@@ -867,22 +389,15 @@
                     document.getElementById('student-report').innerHTML = '';
                     return;
                 }
-                const studentOccurrences = occurrences.filter(o => 
-                    o.studentName.toLowerCase().includes(name)
-                );
+                const studentOccurrences = occurrences.filter(o => o.studentName.toLowerCase().includes(name));
                 renderStudentReport(studentOccurrences, name);
             });
         }
 
         function renderStudentReport(studentOccurrences, searchName) {
             const container = document.getElementById('student-report');
-            
             if (studentOccurrences.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <p>Nenhum aluno encontrado com "${searchName}"</p>
-                    </div>
-                `;
+                container.innerHTML = `<div class="empty-state"><p>Nenhum aluno encontrado com "${searchName}"</p></div>`;
                 return;
             }
 
@@ -901,18 +416,9 @@
                     <h3 class="card-title">${items[0].studentName}</h3>
                     <p class="detail-value" style="margin-bottom: 1rem;">${items[0].class}</p>
                     <div class="stats-grid">
-                        <div class="stat-card stat-leve">
-                            <span class="stat-number">${counts.Leve}</span>
-                            <span class="stat-label">Leve</span>
-                        </div>
-                        <div class="stat-card stat-medio">
-                            <span class="stat-number">${counts.Médio}</span>
-                            <span class="stat-label">Médio</span>
-                        </div>
-                        <div class="stat-card stat-grave">
-                            <span class="stat-number">${counts.Grave}</span>
-                            <span class="stat-label">Grave</span>
-                        </div>
+                        <div class="stat-card stat-leve"><span class="stat-number">${counts.Leve}</span><span class="stat-label">Leve</span></div>
+                        <div class="stat-card stat-medio"><span class="stat-number">${counts.Médio}</span><span class="stat-label">Médio</span></div>
+                        <div class="stat-card stat-grave"><span class="stat-number">${counts.Grave}</span><span class="stat-label">Grave</span></div>
                     </div>
                     <div class="timeline">
                         ${items.map(o => `
@@ -932,255 +438,16 @@
         }
 
         // ============ INICIALIZAÇÃO ============
-        function init() {
+        async function init() {
+            const hasConfig = await loadConfig();
+            if (typeof SUPABASE_URL !== 'undefined' && typeof SUPABASE_KEY !== 'undefined') {
+                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            }
             setupTabs();
             setupForm();
             setupFilters();
             setupModal();
             loadOccurrences();
-        }
-
-        document.addEventListener('DOMContentLoaded', init);
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').catch(() => {});
-        }
-    </script>
-                    description: occurrence.description || null,
-                    teacher: occurrence.teacher
-                }]);
-            
-            if (error) {
-                console.error('Erro ao salvar:', error);
-                showToast('Erro ao salvar. Tente novamente.');
-                return false;
-            }
-            return true;
-        }
-
-        function setupTabs() {
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                    btn.classList.add('active');
-                    document.getElementById(btn.dataset.tab).classList.add('active');
-                });
-            });
-        }
-
-        async function setupForm() {
-            const form = document.getElementById('occurrence-form');
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const btn = form.querySelector('.btn-primary');
-                btn.disabled = true;
-                btn.textContent = 'Salvando...';
-                
-                const occurrence = {
-                    id: Date.now(),
-                    studentName: document.getElementById('student-name').value.trim(),
-                    class: document.getElementById('class').value,
-                    type: document.getElementById('type').value,
-                    gravity: document.getElementById('gravity').value,
-                    description: document.getElementById('description').value.trim(),
-                    teacher: document.getElementById('teacher').value.trim(),
-                    date: new Date().toISOString()
-                };
-                
-                const success = await saveOccurrence(occurrence);
-                if (success) {
-                    showToast('Ocorrência salva com sucesso!');
-                    form.reset();
-                    loadOccurrences();
-                }
-                
-                btn.disabled = false;
-                btn.textContent = 'Salvar Ocorrência';
-            });
-
-            document.getElementById('clear-form').addEventListener('click', () => {
-                form.reset();
-            });
-        }
-
-        function setupFilters() {
-            const filterClass = document.getElementById('filter-class');
-            const filterGravity = document.getElementById('filter-gravity');
-            const filterStudent = document.getElementById('filter-student');
-            const filterDateStart = document.getElementById('filter-date-start');
-            const filterDateEnd = document.getElementById('filter-date-end');
-
-            [filterClass, filterGravity, filterStudent, filterDateStart, filterDateEnd].forEach(el => {
-                el.addEventListener('input', renderOccurrences);
-            });
-        }
-
-        function getFilteredOccurrences() {
-            const filterClass = document.getElementById('filter-class').value;
-            const filterGravity = document.getElementById('filter-gravity').value;
-            const filterStudent = document.getElementById('filter-student').value.toLowerCase();
-            const filterDateStart = document.getElementById('filter-date-start').value;
-            const filterDateEnd = document.getElementById('filter-date-end').value;
-
-            return occurrences.filter(o => {
-                if (filterClass && o.class !== filterClass) return false;
-                if (filterGravity && o.gravity !== filterGravity) return false;
-                if (filterStudent && !o.studentName.toLowerCase().includes(filterStudent)) return false;
-                if (filterDateStart && o.date < filterDateStart) return false;
-                if (filterDateEnd && o.date > filterDateEnd + 'T23:59:59') return false;
-                return true;
-            });
-        }
-
-        function renderOccurrences() {
-            const list = document.getElementById('occurrence-list');
-            const filtered = getFilteredOccurrences();
-
-            if (filtered.length === 0) {
-                list.innerHTML = `
-                    <div class="empty-state">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-                        </svg>
-                        <p>Nenhuma ocorrência encontrada</p>
-                    </div>
-                `;
-                return;
-            }
-
-            list.innerHTML = filtered.map(o => `
-                <div class="occurrence-item" onclick="toggleDetails(this)">
-                    <div class="occurrence-header">
-                        <span class="occurrence-student">${o.studentName}</span>
-                        <span class="badge badge-${o.gravity.toLowerCase()}">${o.gravity}</span>
-                    </div>
-                    <div class="occurrence-type">${o.type} - ${o.class}</div>
-                    <div class="occurrence-date">${formatDate(o.date)}</div>
-                    <div class="occurrence-details">
-                        <div class="detail-row">
-                            <span class="detail-label">Turma:</span>
-                            <span class="detail-value">${o.class}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Tipo:</span>
-                            <span class="detail-value">${o.type}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Gravidade:</span>
-                            <span class="detail-value">${o.gravity}</span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Professor:</span>
-                            <span class="detail-value">${o.teacher}</span>
-                        </div>
-                        ${o.description ? `
-                        <div class="detail-row">
-                            <span class="detail-label">Descrição:</span>
-                            <span class="detail-value">${o.description}</span>
-                        </div>
-                        ` : ''}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function toggleDetails(item) {
-            item.querySelector('.occurrence-details').classList.toggle('show');
-        }
-
-        function formatDate(dateStr) {
-            const date = new Date(dateStr);
-            return date.toLocaleDateString('pt-BR', {
-                day: '2-digit',
-                month: '2-digit',
-                year: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            });
-        }
-
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            setTimeout(() => toast.remove(), 3000);
-        }
-
-        function setupModal() {
-            document.getElementById('close-modal').addEventListener('click', () => {
-                document.getElementById('student-modal').classList.remove('show');
-            });
-
-            document.getElementById('search-student').addEventListener('input', (e) => {
-                const name = e.target.value.trim().toLowerCase();
-                if (name.length < 2) {
-                    document.getElementById('student-report').innerHTML = '';
-                    return;
-                }
-                const studentOccurrences = occurrences.filter(o => 
-                    o.studentName.toLowerCase().includes(name)
-                );
-                renderStudentReport(studentOccurrences, name);
-            });
-        }
-
-        function renderStudentReport(studentOccurrences, searchName) {
-            const container = document.getElementById('student-report');
-            
-            if (studentOccurrences.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <p>Nenhum aluno encontrado com "${searchName}"</p>
-                    </div>
-                `;
-                return;
-            }
-
-            const counts = { Leve: 0, Médio: 0, Grave: 0 };
-            studentOccurrences.forEach(o => counts[o.gravity]++);
-
-            const grouped = {};
-            studentOccurrences.forEach(o => {
-                const key = o.studentName.toLowerCase();
-                if (!grouped[key]) grouped[key] = [];
-                grouped[key].push(o);
-            });
-
-            container.innerHTML = Object.entries(grouped).map(([name, items]) => `
-                <div class="card">
-                    <h3 class="card-title">${items[0].studentName}</h3>
-                    <p class="detail-value" style="margin-bottom: 1rem;">${items[0].class}</p>
-                    <div class="stats-grid">
-                        <div class="stat-card stat-leve">
-                            <span class="stat-number">${counts.Leve}</span>
-                            <span class="stat-label">Leve</span>
-                        </div>
-                        <div class="stat-card stat-medio">
-                            <span class="stat-number">${counts.Médio}</span>
-                            <span class="stat-label">Médio</span>
-                        </div>
-                        <div class="stat-card stat-grave">
-                            <span class="stat-number">${counts.Grave}</span>
-                            <span class="stat-label">Grave</span>
-                        </div>
-                    </div>
-                    <div class="timeline">
-                        ${items.map(o => `
-                            <div class="timeline-item">
-                                <div class="occurrence-header">
-                                    <span class="occurrence-type">${o.type}</span>
-                                    <span class="badge badge-${o.gravity.toLowerCase()}">${o.gravity}</span>
-                                </div>
-                                <div class="occurrence-date">${formatDate(o.date)}</div>
-                                <div class="detail-label" style="margin-top: 0.5rem;">${o.teacher}</div>
-                                ${o.description ? `<div style="margin-top: 0.5rem; font-size: 0.875rem;">${o.description}</div>` : ''}
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `).join('');
         }
 
         document.addEventListener('DOMContentLoaded', init);
