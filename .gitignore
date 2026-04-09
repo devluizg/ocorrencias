@@ -1,8 +1,7 @@
 # Dependencies
 node_modules/
 
-# Environment files (NÃO COMMITAR)
-js/config.js
+# Environment files
 .env
 .env.local
 
