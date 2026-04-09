@@ -11,339 +11,937 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: '#0040a1',
-                        'primary-container': '#0056d2',
-                        'on-primary': '#ffffff',
-                        'surface': '#f8f9fa',
-                        'surface-container': '#edeeef',
-                        'surface-container-low': '#f3f4f5',
-                        'surface-container-lowest': '#ffffff',
-                        'surface-container-high': '#e7e8e9',
-                        'surface-container-highest': '#e1e3e4',
-                        'on-surface': '#191c1d',
-                        'on-surface-variant': '#424654',
-                        'outline': '#737785',
-                        'secondary': '#506073',
-                        'secondary-container': '#d0e1f8',
-                        'tertiary': '#940010',
-                        'tertiary-container': '#ba1b20',
-                        'error': '#ba1a1a',
-                        'surface-dim': '#d9dadb',
-                        'inverse-surface': '#2e3132',
-                        'surface-tint': '#0056d2',
-                    },
-                    fontFamily: {
-                        headline: ['Manrope'],
-                        body: ['Public Sans'],
-                    }
-                }
-            }
-        }
-    </script>
+    
     <style>
+        :root {
+            --primary: #0040a1;
+            --primary-container: #0056d2;
+            --on-primary: #ffffff;
+            --surface: #f8f9fa;
+            --surface-container: #edeeef;
+            --surface-container-low: #f3f4f5;
+            --surface-container-lowest: #ffffff;
+            --surface-container-high: #e7e8e9;
+            --surface-container-highest: #e1e3e4;
+            --on-surface: #191c1d;
+            --on-surface-variant: #424654;
+            --outline: #737785;
+            --secondary: #506073;
+            --secondary-container: #d0e1f8;
+            --tertiary: #940010;
+            --tertiary-container: #ba1b20;
+            --error: #ba1a1a;
+            --surface-dim: #d9dadb;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Public Sans', sans-serif;
+            background: var(--surface-container);
+            color: var(--on-surface);
             min-height: 100dvh;
+            padding-bottom: 100px;
         }
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Manrope', sans-serif;
-        }
+        
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+        
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
-        .severity-radio:checked + label {
-            transform: scale(1.02);
-            box-shadow: 0 4px 12px rgba(0, 64, 161, 0.12);
+        
+        /* Header */
+        header {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(12px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--surface-container-high);
+            padding: 0 1rem;
         }
+        
+        .header-content {
+            max-width: 480px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+        
+        header h1 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .menu-btn, .avatar-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--primary);
+            transition: background 0.2s;
+        }
+        
+        .menu-btn:hover, .avatar-btn:hover {
+            background: var(--surface-container-low);
+        }
+        
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--surface-container-highest);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Main */
+        main {
+            padding: 80px 1rem 1rem;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+        
+        .page-subtitle {
+            color: var(--on-surface-variant);
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Cards */
+        .card {
+            background: var(--surface-container-lowest);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1rem;
+        }
+        
+        /* Form */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--outline);
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            height: 48px;
+            background: var(--surface-container-highest);
+            border: none;
+            border-radius: 0.75rem;
+            padding: 0 1rem;
+            font-size: 1rem;
+            color: var(--on-surface);
+            transition: all 0.2s;
+        }
+        
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--primary);
+            background: var(--surface-container-low);
+        }
+        
+        .form-textarea {
+            height: auto;
+            padding: 1rem;
+            resize: none;
+        }
+        
+        .input-icon-wrapper {
+            position: relative;
+        }
+        
+        .input-icon-wrapper .material-symbols-outlined {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            color: var(--outline);
+        }
+        
+        /* Severity Buttons */
+        .severity-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+        }
+        
+        .severity-radio {
+            display: none;
+        }
+        
+        .severity-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            background: var(--surface-container-lowest);
+            border-left: 4px solid var(--secondary-container);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .severity-label:hover {
+            background: var(--surface-container-low);
+        }
+        
+        #sev-leve:checked + .severity-label {
+            border-left-color: var(--secondary-container);
+        }
+        
+        #sev-leve:checked + .severity-label .material-symbols-outlined {
+            color: var(--secondary);
+        }
+        
+        #sev-medio:checked + .severity-label {
+            border-left-color: var(--primary-container);
+        }
+        
+        #sev-medio:checked + .severity-label .material-symbols-outlined {
+            color: var(--primary);
+        }
+        
+        #sev-grave:checked + .severity-label {
+            border-left-color: var(--tertiary-container);
+        }
+        
+        #sev-grave:checked + .severity-label .material-symbols-outlined {
+            color: var(--tertiary);
+        }
+        
+        .severity-label span:last-child {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--on-surface);
+            margin-top: 0.25rem;
+        }
+        
+        /* Type Buttons */
+        .type-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+        }
+        
+        .type-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            background: var(--surface-container-lowest);
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+        }
+        
+        .type-btn:hover {
+            background: var(--secondary-container);
+        }
+        
         .type-btn.active {
             background: linear-gradient(135deg, #dae2ff 0%, #b2c5ff 100%);
-            color: #0040a1;
+            color: var(--primary);
         }
-        .tab-active {
+        
+        .type-btn .material-symbols-outlined {
+            font-size: 1rem;
+            color: var(--on-surface-variant);
+        }
+        
+        .type-btn.active .material-symbols-outlined {
+            color: var(--primary);
+        }
+        
+        .type-btn span:last-child {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            line-height: 1;
+        }
+        
+        /* Responsible */
+        .responsible-box {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--surface-container-high);
+            border-radius: 1rem;
+        }
+        
+        .responsible-box .material-symbols-outlined {
+            color: var(--outline);
+        }
+        
+        .responsible-info {
+            flex: 1;
+        }
+        
+        .responsible-label {
+            font-size: 0.625rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--outline);
+        }
+        
+        .responsible-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--on-surface);
+        }
+        
+        /* Buttons */
+        .btn-primary {
+            width: 100%;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-container) 100%);
+            color: var(--on-primary);
+            border: none;
+            border-radius: 1rem;
+            font-size: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            transition: transform 0.2s;
+        }
+        
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+        
+        .btn-secondary {
+            width: 100%;
+            height: 48px;
+            background: var(--surface-container-lowest);
+            color: var(--on-surface-variant);
+            border: none;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--surface-container-high);
+        }
+        
+        /* Bottom Nav */
+        nav.bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid var(--surface-container-high);
+            padding: 0.75rem 0.5rem 1.5rem;
+            display: flex;
+            justify-content: space-around;
+            z-index: 100;
+        }
+        
+        .nav-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--on-surface-variant);
+        }
+        
+        .nav-btn.active {
             background: linear-gradient(180deg, rgba(0,64,161,0.08) 0%, rgba(0,64,161,0.04) 100%);
-            color: #0040a1;
+            color: var(--primary);
         }
-        .tab-active .material-symbols-outlined {
+        
+        .nav-btn.active .material-symbols-outlined {
             font-variation-settings: 'FILL' 1;
+        }
+        
+        .nav-btn span:last-child {
+            font-size: 0.625rem;
+            font-weight: 600;
+            margin-top: 0.25rem;
+        }
+        
+        /* Tabs */
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Filters */
+        .filter-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .filter-select, .filter-input {
+            height: 40px;
+            background: var(--surface-container-highest);
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0 0.75rem;
+            font-size: 0.875rem;
+            color: var(--on-surface);
+        }
+        
+        .filter-select:focus, .filter-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+        
+        /* Occurrence List */
+        .occurrence-item {
+            background: var(--surface-container-lowest);
+            border-radius: 1rem;
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .occurrence-item:active {
+            transform: scale(0.98);
+        }
+        
+        .occurrence-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.5rem;
+        }
+        
+        .occurrence-student {
+            font-weight: 700;
+            color: var(--on-surface);
+        }
+        
+        .occurrence-class {
+            font-size: 0.75rem;
+            color: var(--on-surface-variant);
+            margin-left: 0.5rem;
+        }
+        
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge-leve {
+            background: var(--secondary-container);
+            color: var(--secondary);
+        }
+        
+        .badge-medio {
+            background: var(--primary-container);
+            color: var(--primary);
+        }
+        
+        .badge-grave {
+            background: var(--tertiary-container);
+            color: var(--tertiary);
+        }
+        
+        .occurrence-type-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--on-surface-variant);
+            font-size: 0.875rem;
+        }
+        
+        .occurrence-type-row .material-symbols-outlined {
+            font-size: 1rem;
+        }
+        
+        .occurrence-date {
+            font-size: 0.75rem;
+            color: var(--outline);
+            margin-top: 0.25rem;
+        }
+        
+        .occurrence-details {
+            display: none;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--surface-container-high);
+        }
+        
+        .occurrence-details.show {
+            display: block;
+        }
+        
+        .detail-row {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .detail-label {
+            color: var(--outline);
+        }
+        
+        .detail-value {
+            color: var(--on-surface);
+            font-weight: 500;
+        }
+        
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-card {
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            text-align: center;
+        }
+        
+        .stat-card.leve { background: rgba(80, 96, 115, 0.15); }
+        .stat-card.medio { background: rgba(0, 64, 161, 0.15); }
+        .stat-card.grave { background: rgba(148, 0, 16, 0.15); }
+        
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            display: block;
+        }
+        
+        .stat-card.leve .stat-number { color: var(--secondary); }
+        .stat-card.medio .stat-number { color: var(--primary); }
+        .stat-card.grave .stat-number { color: var(--tertiary); }
+        
+        .stat-label {
+            font-size: 0.625rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: var(--on-surface-variant);
+        }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 1.5rem;
+            border-left: 2px solid var(--surface-container-high);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 0.75rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -1.625rem;
+            top: 0.75rem;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+        
+        .timeline-card {
+            background: var(--surface-container-low);
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+        }
+        
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .timeline-date {
+            font-size: 0.75rem;
+            color: var(--outline);
+        }
+        
+        .timeline-teacher {
+            font-size: 0.75rem;
+            color: var(--outline);
+            margin-top: 0.25rem;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--on-surface-variant);
+        }
+        
+        .empty-state .material-symbols-outlined {
+            font-size: 3rem;
+            opacity: 0.5;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: var(--surface-container-lowest);
+            border-radius: 1rem;
+            padding: 1.25rem;
+            width: 100%;
+            max-width: 360px;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .modal-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--on-surface);
+        }
+        
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-close:hover {
+            background: var(--surface-container-high);
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--on-surface);
+            color: var(--surface-container-lowest);
+            padding: 0.75rem 1.25rem;
+            border-radius: 999px;
+            font-weight: 500;
+            box-shadow: var(--shadow-lg);
+            z-index: 300;
+            display: none;
+            animation: slideUp 0.3s;
+        }
+        
+        .toast.show {
+            display: block;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateX(-50%) translateY(20px); opacity: 0; }
+            to { transform: translateX(-50%) translateY(0); opacity: 1; }
+        }
+
+        @media (min-width: 480px) {
+            main, .header-content {
+                max-width: 480px;
+            }
         }
     </style>
 </head>
-<body class="bg-surface-container text-on-surface min-h-screen pb-32">
-
-    <!-- TopAppBar -->
-    <header class="bg-white/85 backdrop-blur-md fixed top-0 w-full z-50 border-b border-surface-container-high">
-        <div class="flex justify-between items-center px-4 h-16 max-w-md mx-auto">
-            <button class="text-primary p-2 rounded-full hover:bg-surface-container-low transition-all" onclick="toggleMenu()">
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <button class="menu-btn" onclick="toggleMenu()">
                 <span class="material-symbols-outlined">menu</span>
             </button>
-            <h1 class="text-lg font-bold tracking-tight text-primary">Ocorrências Escolar</h1>
-            <div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center">
-                <span class="material-symbols-outlined text-on-surface-variant">school</span>
-            </div>
+            <h1>Ocorrências Escolar</h1>
+            <button class="avatar-btn">
+                <div class="avatar">
+                    <span class="material-symbols-outlined" style="color: var(--on-surface-variant)">school</span>
+                </div>
+            </button>
         </div>
     </header>
 
-    <main class="pt-20 px-4 max-w-md mx-auto">
-
-        <!-- ABA NOVA OCORRÊNCIA -->
+    <main>
+        <!-- NOVA OCORRÊNCIA -->
         <section id="nova" class="tab-content active">
-            <div class="mb-6 mt-2">
-                <h2 class="text-2xl font-extrabold text-primary tracking-tight">Nova Ocorrência</h2>
-                <p class="text-on-surface-variant text-sm mt-1">Registre incidentes com agilidade.</p>
-            </div>
+            <h2 class="page-title">Nova Ocorrência</h2>
+            <p class="page-subtitle">Registre incidentes com agilidade.</p>
 
-            <form id="occurrence-form" class="space-y-5">
+            <form id="occurrence-form">
                 <!-- Student & Class -->
-                <div class="bg-surface-container-lowest rounded-2xl p-5 shadow-sm space-y-4">
-                    <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-outline mb-2">Estudante</label>
-                        <div class="relative">
-                            <input id="student-name" required type="text" 
-                                class="w-full h-12 bg-surface-container-highest rounded-xl px-4 text-on-surface focus:ring-2 focus:ring-primary focus:bg-surface-container-low transition-all"
-                                placeholder="Digite o nome do aluno...">
-                            <span class="material-symbols-outlined absolute right-3 top-3 text-outline">search</span>
+                <div class="card">
+                    <div class="form-group">
+                        <label class="form-label">Estudante</label>
+                        <div class="input-icon-wrapper">
+                            <input id="student-name" required type="text" class="form-input" placeholder="Digite o nome do aluno...">
+                            <span class="material-symbols-outlined">search</span>
                         </div>
                     </div>
-                    <div>
-                        <label class="block text-xs font-bold uppercase tracking-wider text-outline mb-2">Série / Turma</label>
-                        <select id="class" required
-                            class="w-full h-12 bg-surface-container-highest rounded-xl px-4 text-on-surface focus:ring-2 focus:ring-primary focus:bg-surface-container-low transition-all appearance-none">
+                    <div class="form-group">
+                        <label class="form-label">Série / Turma</label>
+                        <select id="class" required class="form-select">
                             <option value="">Selecione a turma</option>
-                            <option value="1º Ano A">1º Ano A</option>
-                            <option value="1º Ano B">1º Ano B</option>
-                            <option value="2º Ano A">2º Ano A</option>
-                            <option value="2º Ano B">2º Ano B</option>
-                            <option value="3º Ano A">3º Ano A</option>
-                            <option value="3º Ano B">3º Ano B</option>
-                            <option value="4º Ano A">4º Ano A</option>
-                            <option value="4º Ano B">4º Ano B</option>
-                            <option value="5º Ano A">5º Ano A</option>
-                            <option value="5º Ano B">5º Ano B</option>
-                            <option value="6º Ano A">6º Ano A</option>
-                            <option value="6º Ano B">6º Ano B</option>
-                            <option value="7º Ano A">7º Ano A</option>
-                            <option value="7º Ano B">7º Ano B</option>
-                            <option value="8º Ano A">8º Ano A</option>
-                            <option value="8º Ano B">8º Ano B</option>
-                            <option value="9º Ano A">9º Ano A</option>
-                            <option value="9º Ano B">9º Ano B</option>
-                            <option value="1ª Série">1ª Série</option>
-                            <option value="2ª Série">2ª Série</option>
-                            <option value="3ª Série">3ª Série</option>
+                            <option value="1º Ano A">1º Ano A</option><option value="1º Ano B">1º Ano B</option>
+                            <option value="2º Ano A">2º Ano A</option><option value="2º Ano B">2º Ano B</option>
+                            <option value="3º Ano A">3º Ano A</option><option value="3º Ano B">3º Ano B</option>
+                            <option value="4º Ano A">4º Ano A</option><option value="4º Ano B">4º Ano B</option>
+                            <option value="5º Ano A">5º Ano A</option><option value="5º Ano B">5º Ano B</option>
+                            <option value="6º Ano A">6º Ano A</option><option value="6º Ano B">6º Ano B</option>
+                            <option value="7º Ano A">7º Ano A</option><option value="7º Ano B">7º Ano B</option>
+                            <option value="8º Ano A">8º Ano A</option><option value="8º Ano B">8º Ano B</option>
+                            <option value="9º Ano A">9º Ano A</option><option value="9º Ano B">9º Ano B</option>
+                            <option value="1ª Série">1ª Série</option><option value="2ª Série">2ª Série</option><option value="3ª Série">3ª Série</option>
                         </select>
                     </div>
                 </div>
 
                 <!-- Severity -->
-                <div class="space-y-3">
-                    <label class="block text-xs font-bold uppercase tracking-wider text-outline">Nível de Gravidade</label>
-                    <div class="grid grid-cols-3 gap-3">
-                        <div class="relative">
-                            <input checked class="hidden severity-radio" id="sev-leve" name="severity" type="radio" value="Leve">
-                            <label class="flex flex-col items-center justify-center p-3 rounded-xl bg-surface-container-lowest border-l-4 border-secondary-container cursor-pointer transition-all hover:bg-surface-container-low" for="sev-leve">
-                                <span class="material-symbols-outlined text-primary mb-1">info</span>
-                                <span class="text-xs font-bold text-primary">Leve</span>
-                            </label>
-                        </div>
-                        <div class="relative">
-                            <input class="hidden severity-radio" id="sev-medio" name="severity" type="radio" value="Médio">
-                            <label class="flex flex-col items-center justify-center p-3 rounded-xl bg-surface-container-lowest border-l-4 border-primary-container cursor-pointer transition-all hover:bg-surface-container-low" for="sev-medio">
-                                <span class="material-symbols-outlined text-primary-container mb-1">priority_high</span>
-                                <span class="text-xs font-bold text-primary">Médio</span>
-                            </label>
-                        </div>
-                        <div class="relative">
-                            <input class="hidden severity-radio" id="sev-grave" name="severity" type="radio" value="Grave">
-                            <label class="flex flex-col items-center justify-center p-3 rounded-xl bg-surface-container-lowest border-l-4 border-tertiary cursor-pointer transition-all hover:bg-surface-container-low" for="sev-grave">
-                                <span class="material-symbols-outlined text-tertiary mb-1">warning</span>
-                                <span class="text-xs font-bold text-tertiary">Grave</span>
-                            </label>
-                        </div>
+                <div class="form-group">
+                    <label class="form-label">Nível de Gravidade</label>
+                    <div class="severity-grid">
+                        <input checked class="severity-radio" id="sev-leve" name="severity" type="radio" value="Leve">
+                        <label class="severity-label" for="sev-leve">
+                            <span class="material-symbols-outlined">info</span>
+                            <span>Leve</span>
+                        </label>
+                        <input class="severity-radio" id="sev-medio" name="severity" type="radio" value="Médio">
+                        <label class="severity-label" for="sev-medio">
+                            <span class="material-symbols-outlined">priority_high</span>
+                            <span>Médio</span>
+                        </label>
+                        <input class="severity-radio" id="sev-grave" name="severity" type="radio" value="Grave">
+                        <label class="severity-label" for="sev-grave">
+                            <span class="material-symbols-outlined">warning</span>
+                            <span>Grave</span>
+                        </label>
                     </div>
                 </div>
 
                 <!-- Type -->
-                <div class="space-y-3">
-                    <label class="block text-xs font-bold uppercase tracking-wider text-outline">Tipo de Ocorrência</label>
-                    <div class="grid grid-cols-2 gap-2">
-                        <button type="button" class="type-btn flex items-center gap-2 p-3 rounded-xl bg-surface-container-lowest text-left hover:bg-surface-container-high transition-colors" data-type="Atraso">
-                            <span class="material-symbols-outlined text-sm text-on-surface-variant">schedule</span>
-                            <span class="text-xs font-semibold">Atraso</span>
+                <div class="form-group">
+                    <label class="form-label">Tipo de Ocorrência</label>
+                    <div class="type-grid">
+                        <button type="button" class="type-btn" data-type="Atraso">
+                            <span class="material-symbols-outlined">schedule</span>
+                            <span>Atraso</span>
                         </button>
-                        <button type="button" class="type-btn flex items-center gap-2 p-3 rounded-xl bg-surface-container-lowest text-left hover:bg-surface-container-high transition-colors" data-type="Falta">
-                            <span class="material-symbols-outlined text-sm text-on-surface-variant">event_busy</span>
-                            <span class="text-xs font-semibold">Falta</span>
+                        <button type="button" class="type-btn" data-type="Falta">
+                            <span class="material-symbols-outlined">event_busy</span>
+                            <span>Falta</span>
                         </button>
-                        <button type="button" class="type-btn flex items-center gap-2 p-3 rounded-xl bg-surface-container-lowest text-left hover:bg-surface-container-high transition-colors" data-type="Falta de material">
-                            <span class="material-symbols-outlined text-sm text-on-surface-variant">inventory_2</span>
-                            <span class="text-xs font-semibold">Falta Material</span>
+                        <button type="button" class="type-btn" data-type="Falta de material">
+                            <span class="material-symbols-outlined">inventory_2</span>
+                            <span>Falta Material</span>
                         </button>
-                        <button type="button" class="type-btn flex items-center gap-2 p-3 rounded-xl bg-surface-container-lowest text-left hover:bg-surface-container-high transition-colors" data-type="Não realizou tarefa">
-                            <span class="material-symbols-outlined text-sm text-on-surface-variant">assignment</span>
-                            <span class="text-xs font-semibold">Não fez tarefa</span>
+                        <button type="button" class="type-btn" data-type="Não realizou tarefa">
+                            <span class="material-symbols-outlined">assignment</span>
+                            <span>Não fez tarefa</span>
                         </button>
-                        <button type="button" class="type-btn flex items-center gap-2 p-3 rounded-xl bg-surface-container-lowest text-left hover:bg-surface-container-high transition-colors" data-type="Conversa excessiva">
-                            <span class="material-symbols-outlined text-sm text-on-surface-variant">chat</span>
-                            <span class="text-xs font-semibold">Conversa</span>
+                        <button type="button" class="type-btn" data-type="Conversa excessiva">
+                            <span class="material-symbols-outlined">chat</span>
+                            <span>Conversa</span>
                         </button>
-                        <button type="button" class="type-btn flex items-center gap-2 p-3 rounded-xl bg-surface-container-lowest text-left hover:bg-surface-container-high transition-colors" data-type="Brigas/Conflito">
-                            <span class="material-symbols-outlined text-sm text-on-surface-variant">groups</span>
-                            <span class="text-xs font-semibold">Brigas</span>
+                        <button type="button" class="type-btn" data-type="Brigas/Conflito">
+                            <span class="material-symbols-outlined">groups</span>
+                            <span>Brigas</span>
                         </button>
-                        <button type="button" class="type-btn flex items-center gap-2 p-3 rounded-xl bg-surface-container-lowest text-left hover:bg-surface-container-high transition-colors" data-type="Bullying/Assédio">
-                            <span class="material-symbols-outlined text-sm text-on-surface-variant">back_hand</span>
-                            <span class="text-xs font-semibold">Bullying</span>
+                        <button type="button" class="type-btn" data-type="Bullying/Assédio">
+                            <span class="material-symbols-outlined">back_hand</span>
+                            <span>Bullying</span>
                         </button>
-                        <button type="button" class="type-btn flex items-center gap-2 p-3 rounded-xl bg-surface-container-lowest text-left hover:bg-surface-container-high transition-colors" data-type="Uso de celular">
-                            <span class="material-symbols-outlined text-sm text-on-surface-variant">smartphone</span>
-                            <span class="text-xs font-semibold">Celular</span>
+                        <button type="button" class="type-btn" data-type="Uso de celular">
+                            <span class="material-symbols-outlined">smartphone</span>
+                            <span>Celular</span>
                         </button>
-                        <button type="button" class="type-btn flex items-center gap-2 p-3 rounded-xl bg-surface-container-lowest text-left hover:bg-surface-container-high transition-colors" data-type="Descumprimento de regras">
-                            <span class="material-symbols-outlined text-sm text-on-surface-variant">gavel</span>
-                            <span class="text-xs font-semibold">Desrespeito</span>
+                        <button type="button" class="type-btn" data-type="Descumprimento de regras">
+                            <span class="material-symbols-outlined">gavel</span>
+                            <span>Desrespeito</span>
                         </button>
-                        <button type="button" class="type-btn flex items-center gap-2 p-3 rounded-xl bg-surface-container-lowest text-left hover:bg-surface-container-high transition-colors" data-type="Agressão verbal">
-                            <span class="material-symbols-outlined text-sm text-on-surface-variant">record_voice_over</span>
-                            <span class="text-xs font-semibold">Agressão Verbal</span>
+                        <button type="button" class="type-btn" data-type="Agressão verbal">
+                            <span class="material-symbols-outlined">record_voice_over</span>
+                            <span>Agressão Verbal</span>
                         </button>
-                        <button type="button" class="type-btn flex items-center gap-2 p-3 rounded-xl bg-surface-container-lowest text-left hover:bg-surface-container-high transition-colors" data-type="Agressão física">
-                            <span class="material-symbols-outlined text-sm text-on-surface-variant">person_off</span>
-                            <span class="text-xs font-semibold">Agressão Física</span>
+                        <button type="button" class="type-btn" data-type="Agressão física">
+                            <span class="material-symbols-outlined">person_off</span>
+                            <span>Agressão Física</span>
                         </button>
-                        <button type="button" class="type-btn flex items-center gap-2 p-3 rounded-xl bg-surface-container-lowest text-left hover:bg-surface-container-high transition-colors" data-type="Outro">
-                            <span class="material-symbols-outlined text-sm text-on-surface-variant">more_horiz</span>
-                            <span class="text-xs font-semibold">Outro</span>
+                        <button type="button" class="type-btn" data-type="Outro">
+                            <span class="material-symbols-outlined">more_horiz</span>
+                            <span>Outro</span>
                         </button>
                     </div>
                     <input type="hidden" id="type" required>
                 </div>
 
                 <!-- Description -->
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-outline mb-2">Descrição (Opcional)</label>
-                    <textarea id="description" rows="3" 
-                        class="w-full bg-surface-container-lowest rounded-xl p-4 text-on-surface focus:ring-2 focus:ring-primary transition-all shadow-sm"
-                        placeholder="Descreva o ocorrido com clareza..."></textarea>
+                <div class="form-group">
+                    <label class="form-label">Descrição (Opcional)</label>
+                    <textarea id="description" rows="3" class="form-textarea" placeholder="Descreva o ocorrido..."></textarea>
                 </div>
 
                 <!-- Responsible -->
-                <div class="flex items-center gap-3 p-4 bg-surface-container-high/40 rounded-2xl">
-                    <span class="material-symbols-outlined text-outline">account_circle</span>
-                    <div class="flex flex-col flex-1">
-                        <span class="text-[10px] uppercase font-bold text-outline">Professor Responsável</span>
-                        <input id="teacher" required type="text" 
-                            class="bg-transparent text-sm font-semibold text-on-surface focus:outline-none"
-                            placeholder="Seu nome">
+                <div class="responsible-box">
+                    <span class="material-symbols-outlined">account_circle</span>
+                    <div class="responsible-info">
+                        <div class="responsible-label">Professor Responsável</div>
+                        <input id="teacher" required type="text" class="responsible-name" placeholder="Seu nome" style="background: transparent; border: none; outline: none; width: 100%;">
                     </div>
                 </div>
 
-                <!-- Action -->
-                <button type="submit" class="w-full h-14 bg-gradient-to-br from-primary to-primary-container text-white rounded-2xl font-bold shadow-lg hover:scale-[0.98] transition-transform flex items-center justify-center gap-2">
+                <button type="submit" class="btn-primary" style="margin-top: 1.5rem;">
                     <span class="material-symbols-outlined">save</span>
                     Salvar Ocorrência
                 </button>
-                <button type="button" id="clear-form" class="w-full h-12 bg-surface-container-lowest text-on-surface-variant rounded-2xl font-semibold hover:bg-surface-container-high transition-colors">
+                <button type="button" id="clear-form" class="btn-secondary" style="margin-top: 0.75rem;">
                     Limpar Formulário
                 </button>
             </form>
         </section>
 
-        <!-- ABA OCORRÊNCIAS -->
+        <!-- OCORRÊNCIAS -->
         <section id="ocorrencias" class="tab-content">
-            <div class="mb-6 mt-2">
-                <h2 class="text-2xl font-extrabold text-primary tracking-tight">Todas as Ocorrências</h2>
-            </div>
+            <h2 class="page-title">Todas as Ocorrências</h2>
 
-            <!-- Filtros -->
-            <div class="bg-surface-container-lowest rounded-2xl p-4 space-y-3 mb-4">
-                <div class="grid grid-cols-2 gap-2">
-                    <select id="filter-class" class="h-10 bg-surface-container-highest rounded-lg px-3 text-sm focus:ring-2 focus:ring-primary">
+            <div class="card">
+                <div class="filter-row">
+                    <select id="filter-class" class="filter-select">
                         <option value="">Todas as turmas</option>
-                        <option value="1º Ano A">1º Ano A</option>
-                        <option value="1º Ano B">1º Ano B</option>
-                        <option value="2º Ano A">2º Ano A</option>
-                        <option value="2º Ano B">2º Ano B</option>
-                        <option value="3º Ano A">3º Ano A</option>
-                        <option value="3º Ano B">3º Ano B</option>
-                        <option value="4º Ano A">4º Ano A</option>
-                        <option value="4º Ano B">4º Ano B</option>
-                        <option value="5º Ano A">5º Ano A</option>
-                        <option value="5º Ano B">5º Ano B</option>
-                        <option value="6º Ano A">6º Ano A</option>
-                        <option value="6º Ano B">6º Ano B</option>
-                        <option value="7º Ano A">7º Ano A</option>
-                        <option value="7º Ano B">7º Ano B</option>
-                        <option value="8º Ano A">8º Ano A</option>
-                        <option value="8º Ano B">8º Ano B</option>
-                        <option value="9º Ano A">9º Ano A</option>
-                        <option value="9º Ano B">9º Ano B</option>
-                        <option value="1ª Série">1ª Série</option>
-                        <option value="2ª Série">2ª Série</option>
-                        <option value="3ª Série">3ª Série</option>
+                        <option value="1º Ano A">1º Ano A</option><option value="1º Ano B">1º Ano B</option>
+                        <option value="2º Ano A">2º Ano A</option><option value="2º Ano B">2º Ano B</option>
+                        <option value="3º Ano A">3º Ano A</option><option value="3º Ano B">3º Ano B</option>
+                        <option value="4º Ano A">4º Ano A</option><option value="4º Ano B">4º Ano B</option>
+                        <option value="5º Ano A">5º Ano A</option><option value="5º Ano B">5º Ano B</option>
+                        <option value="6º Ano A">6º Ano A</option><option value="6º Ano B">6º Ano B</option>
+                        <option value="7º Ano A">7º Ano A</option><option value="7º Ano B">7º Ano B</option>
+                        <option value="8º Ano A">8º Ano A</option><option value="8º Ano B">8º Ano B</option>
+                        <option value="9º Ano A">9º Ano A</option><option value="9º Ano B">9º Ano B</option>
+                        <option value="1ª Série">1ª Série</option><option value="2ª Série">2ª Série</option><option value="3ª Série">3ª Série</option>
                     </select>
-                    <select id="filter-gravity" class="h-10 bg-surface-container-highest rounded-lg px-3 text-sm focus:ring-2 focus:ring-primary">
+                    <select id="filter-gravity" class="filter-select">
                         <option value="">Todas as gravidades</option>
-                        <option value="Leve">Leve</option>
-                        <option value="Médio">Médio</option>
-                        <option value="Grave">Grave</option>
+                        <option value="Leve">Leve</option><option value="Médio">Médio</option><option value="Grave">Grave</option>
                     </select>
                 </div>
-                <input type="text" id="filter-student" placeholder="Buscar aluno..." 
-                    class="h-10 bg-surface-container-highest rounded-lg px-3 text-sm focus:ring-2 focus:ring-primary w-full">
-                <div class="grid grid-cols-2 gap-2">
-                    <input type="date" id="filter-date-start" class="h-10 bg-surface-container-highest rounded-lg px-3 text-sm">
-                    <input type="date" id="filter-date-end" class="h-10 bg-surface-container-highest rounded-lg px-3 text-sm">
+                <input type="text" id="filter-student" class="filter-input" placeholder="Buscar aluno..." style="margin-bottom: 0.5rem; width: 100%;">
+                <div class="filter-row">
+                    <input type="date" id="filter-date-start" class="filter-input">
+                    <input type="date" id="filter-date-end" class="filter-input">
                 </div>
             </div>
 
-            <div id="occurrence-list" class="space-y-3"></div>
+            <div id="occurrence-list"></div>
         </section>
 
-        <!-- ABA RELATÓRIOS -->
+        <!-- RELATÓRIOS -->
         <section id="relatorios" class="tab-content">
-            <div class="mb-6 mt-2">
-                <h2 class="text-2xl font-extrabold text-primary tracking-tight">Relatórios</h2>
+            <h2 class="page-title">Relatórios</h2>
+
+            <div class="card">
+                <label class="form-label">Buscar Aluno</label>
+                <input type="text" id="search-student" class="form-input" placeholder="Digite o nome do aluno...">
             </div>
 
-            <div class="bg-surface-container-lowest rounded-2xl p-4">
-                <label class="block text-xs font-bold uppercase tracking-wider text-outline mb-2">Buscar Aluno</label>
-                <input type="text" id="search-student" placeholder="Digite o nome do aluno..."
-                    class="w-full h-12 bg-surface-container-highest rounded-xl px-4 text-on-surface focus:ring-2 focus:ring-primary">
-            </div>
-
-            <div id="student-report" class="space-y-4 mt-4"></div>
+            <div id="student-report"></div>
         </section>
     </main>
 
-    <!-- BottomNavBar -->
-    <nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-2 pb-5 pt-2 bg-white/85 backdrop-blur-md border-t border-surface-container-high z-50">
-        <button class="tab-btn tab-active flex flex-col items-center justify-center px-4 py-2 rounded-xl transition-all" data-tab="nova">
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+        <button class="nav-btn active" data-tab="nova">
             <span class="material-symbols-outlined">add_circle</span>
-            <span class="text-[10px] font-semibold">Nova</span>
+            <span>Nova</span>
         </button>
-        <button class="tab-btn flex flex-col items-center justify-center px-4 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container-low transition-all" data-tab="ocorrencias">
+        <button class="nav-btn" data-tab="ocorrencias">
             <span class="material-symbols-outlined">format_list_bulleted</span>
-            <span class="text-[10px] font-semibold">Ocorrências</span>
+            <span>Ocorrências</span>
         </button>
-        <button class="tab-btn flex flex-col items-center justify-center px-4 py-2 rounded-xl text-on-surface-variant hover:bg-surface-container-low transition-all" data-tab="relatorios">
+        <button class="nav-btn" data-tab="relatorios">
             <span class="material-symbols-outlined">analytics</span>
-            <span class="text-[10px] font-semibold">Relatórios</span>
+            <span>Relatórios</span>
         </button>
     </nav>
 
     <!-- Modal -->
-    <div id="student-modal" class="modal hidden">
-        <div class="bg-surface-container-lowest rounded-2xl p-5 w-full max-w-sm mx-4">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-bold text-on-surface">Relatório do Aluno</h3>
-                <button id="close-modal" class="p-1 rounded-full hover:bg-surface-container-high">
+    <div id="student-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Relatório do Aluno</h3>
+                <button class="modal-close" id="close-modal">
                     <span class="material-symbols-outlined">close</span>
                 </button>
             </div>
@@ -352,8 +950,7 @@
     </div>
 
     <!-- Toast -->
-    <div id="toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 bg-on-surface text-surface-container px-5 py-3 rounded-full font-medium shadow-lg hidden z-50">
-    </div>
+    <div id="toast" class="toast"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
@@ -362,14 +959,11 @@
         const STORAGE_KEY = 'ocorrencias_escolar';
 
         function setupTabs() {
-            document.querySelectorAll('.tab-btn').forEach(btn => {
+            document.querySelectorAll('.nav-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('tab-active'));
-                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.add('text-on-surface-variant'));
+                    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
                     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                    
-                    btn.classList.add('tab-active');
-                    btn.classList.remove('text-on-surface-variant');
+                    btn.classList.add('active');
                     document.getElementById(btn.dataset.tab).classList.add('active');
                 });
             });
@@ -440,7 +1034,7 @@
             const form = document.getElementById('occurrence-form');
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const btn = form.querySelector('button[type="submit"]');
+                const btn = form.querySelector('.btn-primary');
                 btn.disabled = true;
                 btn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Salvando...';
                 
@@ -500,42 +1094,37 @@
             const filtered = getFilteredOccurrences();
 
             if (filtered.length === 0) {
-                list.innerHTML = '<div class="text-center py-8 text-on-surface-variant"><span class="material-symbols-outlined text-4xl mb-2">inbox</span><p>Nenhuma ocorrência encontrada</p></div>';
+                list.innerHTML = '<div class="empty-state"><span class="material-symbols-outlined">inbox</span><p>Nenhuma ocorrência encontrada</p></div>';
                 return;
             }
 
-            const gravityColors = {
-                'Leve': 'bg-secondary-container text-secondary',
-                'Médio': 'bg-primary-container text-primary',
-                'Grave': 'bg-tertiary-container text-tertiary'
-            };
-
             list.innerHTML = filtered.map(o => `
-                <div class="bg-surface-container-lowest rounded-2xl p-4 shadow-sm" onclick="toggleDetails(this)">
-                    <div class="flex justify-between items-start mb-2">
+                <div class="occurrence-item" onclick="toggleDetails(this)">
+                    <div class="occurrence-header">
                         <div>
-                            <span class="font-bold text-on-surface">${o.studentName}</span>
-                            <span class="text-xs text-on-surface-variant ml-2">${o.class}</span>
+                            <span class="occurrence-student">${o.studentName}</span>
+                            <span class="occurrence-class">${o.class}</span>
                         </div>
-                        <span class="px-2 py-1 rounded-full text-xs font-semibold ${gravityColors[o.gravity]}">${o.gravity}</span>
+                        <span class="badge badge-${o.gravity.toLowerCase()}">${o.gravity}</span>
                     </div>
-                    <div class="flex items-center gap-2 text-on-surface-variant text-sm">
-                        <span class="material-symbols-outlined text-base">label</span>
+                    <div class="occurrence-type-row">
+                        <span class="material-symbols-outlined">label</span>
                         <span>${o.type}</span>
                     </div>
-                    <div class="text-xs text-outline mt-1">${formatDate(o.date)}</div>
-                    <div class="hidden mt-3 pt-3 border-t border-surface-container-high details-content">
-                        <div class="grid grid-cols-2 gap-2 text-sm">
-                            <div><span class="text-outline">Professor:</span> <span class="font-medium">${o.teacher}</span></div>
-                            ${o.description ? `<div class="col-span-2"><span class="text-outline">Descrição:</span> <span>${o.description}</span></div>` : ''}
+                    <div class="occurrence-date">${formatDate(o.date)}</div>
+                    <div class="occurrence-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Professor:</span>
+                            <span class="detail-value">${o.teacher}</span>
                         </div>
+                        ${o.description ? `<div class="detail-row"><span class="detail-label">Descrição:</span><span class="detail-value">${o.description}</span></div>` : ''}
                     </div>
                 </div>
             `).join('');
         }
 
         function toggleDetails(el) {
-            el.querySelector('.details-content').classList.toggle('hidden');
+            el.querySelector('.occurrence-details').classList.toggle('show');
         }
 
         function formatDate(dateStr) {
@@ -546,13 +1135,13 @@
         function showToast(message) {
             const toast = document.getElementById('toast');
             toast.textContent = message;
-            toast.classList.remove('hidden');
-            setTimeout(() => toast.classList.add('hidden'), 3000);
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
         function setupModal() {
             document.getElementById('close-modal').addEventListener('click', () => {
-                document.getElementById('student-modal').classList.add('hidden');
+                document.getElementById('student-modal').classList.remove('show');
             });
 
             document.getElementById('search-student').addEventListener('input', (e) => {
@@ -569,7 +1158,7 @@
         function renderStudentReport(studentOccurrences, searchName) {
             const container = document.getElementById('student-report');
             if (studentOccurrences.length === 0) {
-                container.innerHTML = '<div class="text-center py-8 text-on-surface-variant"><p>Nenhum aluno encontrado com "${searchName}"</p></div>';
+                container.innerHTML = '<div class="empty-state"><p>Nenhum aluno encontrado</p></div>';
                 return;
             }
 
@@ -584,33 +1173,32 @@
             });
 
             container.innerHTML = Object.entries(grouped).map(([name, items]) => `
-                <div class="bg-surface-container-lowest rounded-2xl p-5 shadow-sm">
-                    <h3 class="text-lg font-bold text-on-surface">${items[0].studentName}</h3>
-                    <p class="text-on-surface-variant text-sm mb-4">${items[0].class}</p>
-                    <div class="grid grid-cols-3 gap-3 mb-4">
-                        <div class="bg-secondary-container/50 rounded-xl p-3 text-center">
-                            <span class="text-2xl font-bold text-secondary block">${counts.Leve}</span>
-                            <span class="text-xs text-secondary">Leve</span>
+                <div class="card">
+                    <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 0.25rem;">${items[0].studentName}</h3>
+                    <p style="color: var(--on-surface-variant); font-size: 0.875rem; margin-bottom: 1rem;">${items[0].class}</p>
+                    <div class="stats-grid">
+                        <div class="stat-card leve">
+                            <span class="stat-number">${counts.Leve}</span>
+                            <span class="stat-label">Leve</span>
                         </div>
-                        <div class="bg-primary-container/50 rounded-xl p-3 text-center">
-                            <span class="text-2xl font-bold text-primary block">${counts.Médio}</span>
-                            <span class="text-xs text-primary">Médio</span>
+                        <div class="stat-card medio">
+                            <span class="stat-number">${counts.Médio}</span>
+                            <span class="stat-label">Médio</span>
                         </div>
-                        <div class="bg-tertiary-container/50 rounded-xl p-3 text-center">
-                            <span class="text-2xl font-bold text-tertiary block">${counts.Grave}</span>
-                            <span class="text-xs text-tertiary">Grave</span>
+                        <div class="stat-card grave">
+                            <span class="stat-number">${counts.Grave}</span>
+                            <span class="stat-label">Grave</span>
                         </div>
                     </div>
-                    <div class="space-y-2 relative pl-4 border-l-2 border-surface-container-high">
+                    <div class="timeline">
                         ${items.map(o => `
-                            <div class="relative">
-                                <div class="absolute -left-5 top-2 w-2 h-2 rounded-full ${o.gravity === 'Grave' ? 'bg-tertiary' : o.gravity === 'Médio' ? 'bg-primary' : 'bg-secondary'}"></div>
-                                <div class="bg-surface-container-low rounded-lg p-3">
-                                    <div class="flex justify-between items-center">
-                                        <span class="font-medium">${o.type}</span>
-                                        <span class="text-xs text-outline">${formatDate(o.date)}</span>
+                            <div class="timeline-item">
+                                <div class="timeline-card">
+                                    <div class="timeline-header">
+                                        <span style="font-weight: 600;">${o.type}</span>
+                                        <span class="timeline-date">${formatDate(o.date)}</span>
                                     </div>
-                                    <div class="text-xs text-outline mt-1">${o.teacher}</div>
+                                    <div class="timeline-teacher">${o.teacher}</div>
                                 </div>
                             </div>
                         `).join('')}
