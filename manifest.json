@@ -2,8 +2,9 @@
     "name": "Ocorrências Escolar",
     "short_name": "Ocorrencias",
     "description": "Sistema de registro de ocorrências escolares",
-    "start_url": "./",
+    "start_url": "/ocorrencias/",
     "display": "standalone",
+    "scope": "/ocorrencias/",
     "background_color": "#f8f9fa",
     "theme_color": "#0040a1",
     "icons": [
