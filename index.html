@@ -609,71 +609,343 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/config.js"></script>
     <script>
-        // Fallback se config.js não existir
-        if (typeof SUPABASE_URL === 'undefined') {
-            document.getElementById('app').innerHTML = `
-                <div style="padding: 2rem; text-align: center;">
-                    <h2 style="color: #ef4444;">⚠️ Arquivo config.js não encontrado</h2>
-                    <p style="color: #64748b; margin-top: 1rem;">
-                        Crie o arquivo <code style="background: #f1f5f9; padding: 0.25rem 0.5rem; border-radius: 4px;">js/config.js</code> com suas credenciais do Supabase.
-                    </p>
-                    <a href="https://github.com/devluizg/ocorrencias/blob/main/js/config.example.js" 
-                       style="display: inline-block; margin-top: 1rem; color: #2563eb;"
-                       target="_blank">Ver modelo</a>
-                </div>
-            `;
-            throw new Error('Configuração necessária');
-        }
-        
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        
-        const STORAGE_KEY = 'ocorrencias_escolar';
+        // Variáveis globais
+        let supabase = null;
         let occurrences = [];
-        let loading = false;
+        const STORAGE_KEY = 'ocorrencias_escolar';
 
+        // ============ SETUP DAS ABAS (SEMPRE executa) ============
+        function setupTabs() {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    btn.classList.add('active');
+                    document.getElementById(btn.dataset.tab).classList.add('active');
+                });
+            });
+        }
+
+        // ============ SUPABASE (só se config.js existir) ============
+        if (typeof SUPABASE_URL !== 'undefined' && typeof SUPABASE_KEY !== 'undefined') {
+            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            
+            async function loadOccurrences() {
+                const { data, error } = await supabase
+                    .from('occurrences')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                
+                if (error) {
+                    console.error('Erro ao carregar:', error);
+                    const local = localStorage.getItem(STORAGE_KEY);
+                    occurrences = local ? JSON.parse(local) : [];
+                } else {
+                    occurrences = data.map(o => ({
+                        id: o.id,
+                        studentName: o.student_name,
+                        class: o.class,
+                        type: o.type,
+                        gravity: o.gravity,
+                        description: o.description,
+                        teacher: o.teacher,
+                        date: o.created_at
+                    }));
+                }
+                renderOccurrences();
+            }
+
+            async function saveOccurrence(occurrence) {
+                const { error } = await supabase
+                    .from('occurrences')
+                    .insert([{
+                        student_name: occurrence.studentName,
+                        class: occurrence.class,
+                        type: occurrence.type,
+                        gravity: occurrence.gravity,
+                        description: occurrence.description || null,
+                        teacher: occurrence.teacher
+                    }]);
+                
+                if (error) {
+                    console.error('Erro ao salvar:', error);
+                    showToast('Erro ao salvar. Tente novamente.');
+                    return false;
+                }
+                return true;
+            }
+
+            async function setupForm() {
+                const form = document.getElementById('occurrence-form');
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const btn = form.querySelector('.btn-primary');
+                    btn.disabled = true;
+                    btn.textContent = 'Salvando...';
+                    
+                    const occurrence = {
+                        id: Date.now(),
+                        studentName: document.getElementById('student-name').value.trim(),
+                        class: document.getElementById('class').value,
+                        type: document.getElementById('type').value,
+                        gravity: document.getElementById('gravity').value,
+                        description: document.getElementById('description').value.trim(),
+                        teacher: document.getElementById('teacher').value.trim(),
+                        date: new Date().toISOString()
+                    };
+                    
+                    const success = await saveOccurrence(occurrence);
+                    if (success) {
+                        showToast('Ocorrência salva com sucesso!');
+                        form.reset();
+                        loadOccurrences();
+                    }
+                    
+                    btn.disabled = false;
+                    btn.textContent = 'Salvar Ocorrência';
+                });
+
+                document.getElementById('clear-form').addEventListener('click', () => {
+                    form.reset();
+                });
+            }
+        } else {
+            // Sem Supabase - usa localStorage
+            function loadOccurrences() {
+                const data = localStorage.getItem(STORAGE_KEY);
+                occurrences = data ? JSON.parse(data) : [];
+                renderOccurrences();
+            }
+
+            function saveOccurrence(occurrence) {
+                occurrences.unshift(occurrence);
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(occurrences));
+                return true;
+            }
+
+            function setupForm() {
+                const form = document.getElementById('occurrence-form');
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const occurrence = {
+                        id: Date.now(),
+                        studentName: document.getElementById('student-name').value.trim(),
+                        class: document.getElementById('class').value,
+                        type: document.getElementById('type').value,
+                        gravity: document.getElementById('gravity').value,
+                        description: document.getElementById('description').value.trim(),
+                        teacher: document.getElementById('teacher').value.trim(),
+                        date: new Date().toISOString()
+                    };
+                    saveOccurrence(occurrence);
+                    showToast('Ocorrência salva com sucesso!');
+                    form.reset();
+                    renderOccurrences();
+                });
+
+                document.getElementById('clear-form').addEventListener('click', () => {
+                    form.reset();
+                });
+            }
+        }
+
+        // ============ FILTROS ============
+        function setupFilters() {
+            const filterClass = document.getElementById('filter-class');
+            const filterGravity = document.getElementById('filter-gravity');
+            const filterStudent = document.getElementById('filter-student');
+            const filterDateStart = document.getElementById('filter-date-start');
+            const filterDateEnd = document.getElementById('filter-date-end');
+
+            [filterClass, filterGravity, filterStudent, filterDateStart, filterDateEnd].forEach(el => {
+                el.addEventListener('input', renderOccurrences);
+            });
+        }
+
+        function getFilteredOccurrences() {
+            const filterClass = document.getElementById('filter-class').value;
+            const filterGravity = document.getElementById('filter-gravity').value;
+            const filterStudent = document.getElementById('filter-student').value.toLowerCase();
+            const filterDateStart = document.getElementById('filter-date-start').value;
+            const filterDateEnd = document.getElementById('filter-date-end').value;
+
+            return occurrences.filter(o => {
+                if (filterClass && o.class !== filterClass) return false;
+                if (filterGravity && o.gravity !== filterGravity) return false;
+                if (filterStudent && !o.studentName.toLowerCase().includes(filterStudent)) return false;
+                if (filterDateStart && o.date < filterDateStart) return false;
+                if (filterDateEnd && o.date > filterDateEnd + 'T23:59:59') return false;
+                return true;
+            });
+        }
+
+        // ============ RENDER ============
+        function renderOccurrences() {
+            const list = document.getElementById('occurrence-list');
+            const filtered = getFilteredOccurrences();
+
+            if (filtered.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                        </svg>
+                        <p>Nenhuma ocorrência encontrada</p>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = filtered.map(o => `
+                <div class="occurrence-item" onclick="toggleDetails(this)">
+                    <div class="occurrence-header">
+                        <span class="occurrence-student">${o.studentName}</span>
+                        <span class="badge badge-${o.gravity.toLowerCase()}">${o.gravity}</span>
+                    </div>
+                    <div class="occurrence-type">${o.type} - ${o.class}</div>
+                    <div class="occurrence-date">${formatDate(o.date)}</div>
+                    <div class="occurrence-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Turma:</span>
+                            <span class="detail-value">${o.class}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Tipo:</span>
+                            <span class="detail-value">${o.type}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Gravidade:</span>
+                            <span class="detail-value">${o.gravity}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Professor:</span>
+                            <span class="detail-value">${o.teacher}</span>
+                        </div>
+                        ${o.description ? `
+                        <div class="detail-row">
+                            <span class="detail-label">Descrição:</span>
+                            <span class="detail-value">${o.description}</span>
+                        </div>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleDetails(item) {
+            item.querySelector('.occurrence-details').classList.toggle('show');
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('pt-BR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // ============ MODAL / RELATÓRIO ============
+        function setupModal() {
+            document.getElementById('close-modal').addEventListener('click', () => {
+                document.getElementById('student-modal').classList.remove('show');
+            });
+
+            document.getElementById('search-student').addEventListener('input', (e) => {
+                const name = e.target.value.trim().toLowerCase();
+                if (name.length < 2) {
+                    document.getElementById('student-report').innerHTML = '';
+                    return;
+                }
+                const studentOccurrences = occurrences.filter(o => 
+                    o.studentName.toLowerCase().includes(name)
+                );
+                renderStudentReport(studentOccurrences, name);
+            });
+        }
+
+        function renderStudentReport(studentOccurrences, searchName) {
+            const container = document.getElementById('student-report');
+            
+            if (studentOccurrences.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <p>Nenhum aluno encontrado com "${searchName}"</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const counts = { Leve: 0, Médio: 0, Grave: 0 };
+            studentOccurrences.forEach(o => counts[o.gravity]++);
+
+            const grouped = {};
+            studentOccurrences.forEach(o => {
+                const key = o.studentName.toLowerCase();
+                if (!grouped[key]) grouped[key] = [];
+                grouped[key].push(o);
+            });
+
+            container.innerHTML = Object.entries(grouped).map(([name, items]) => `
+                <div class="card">
+                    <h3 class="card-title">${items[0].studentName}</h3>
+                    <p class="detail-value" style="margin-bottom: 1rem;">${items[0].class}</p>
+                    <div class="stats-grid">
+                        <div class="stat-card stat-leve">
+                            <span class="stat-number">${counts.Leve}</span>
+                            <span class="stat-label">Leve</span>
+                        </div>
+                        <div class="stat-card stat-medio">
+                            <span class="stat-number">${counts.Médio}</span>
+                            <span class="stat-label">Médio</span>
+                        </div>
+                        <div class="stat-card stat-grave">
+                            <span class="stat-number">${counts.Grave}</span>
+                            <span class="stat-label">Grave</span>
+                        </div>
+                    </div>
+                    <div class="timeline">
+                        ${items.map(o => `
+                            <div class="timeline-item">
+                                <div class="occurrence-header">
+                                    <span class="occurrence-type">${o.type}</span>
+                                    <span class="badge badge-${o.gravity.toLowerCase()}">${o.gravity}</span>
+                                </div>
+                                <div class="occurrence-date">${formatDate(o.date)}</div>
+                                <div class="detail-label" style="margin-top: 0.5rem;">${o.teacher}</div>
+                                ${o.description ? `<div style="margin-top: 0.5rem; font-size: 0.875rem;">${o.description}</div>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // ============ INICIALIZAÇÃO ============
         function init() {
-            loadOccurrences();
             setupTabs();
             setupForm();
             setupFilters();
             setupModal();
+            loadOccurrences();
         }
 
-        async function loadOccurrences() {
-            loading = true;
-            const { data, error } = await supabase
-                .from('occurrences')
-                .select('*')
-                .order('created_at', { ascending: false });
-            
-            if (error) {
-                console.error('Erro ao carregar:', error);
-                const local = localStorage.getItem(STORAGE_KEY);
-                occurrences = local ? JSON.parse(local) : [];
-            } else {
-                occurrences = data.map(o => ({
-                    id: o.id,
-                    studentName: o.student_name,
-                    class: o.class,
-                    type: o.type,
-                    gravity: o.gravity,
-                    description: o.description,
-                    teacher: o.teacher,
-                    date: o.created_at
-                }));
-            }
-            loading = false;
-            renderOccurrences();
-        }
+        document.addEventListener('DOMContentLoaded', init);
 
-        async function saveOccurrence(occurrence) {
-            const { error } = await supabase
-                .from('occurrences')
-                .insert([{
-                    student_name: occurrence.studentName,
-                    class: occurrence.class,
-                    type: occurrence.type,
-                    gravity: occurrence.gravity,
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(() => {});
+        }
+    </script>
                     description: occurrence.description || null,
                     teacher: occurrence.teacher
                 }]);
