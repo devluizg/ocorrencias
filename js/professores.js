@@ -1,0 +1,21 @@
+const professores = [
+    "ELIANA",
+    "JOANA",
+    "REGINA",
+    "EUNICE",
+    "KELSO",
+    "JHONATAN",
+    "VANESSA",
+    "LUCILIO",
+    "CASSIANO",
+    "ELENFLÁVIA",
+    "ELINELSON",
+    "RODRIGO",
+    "EDMUNDO",
+    "LOUISE",
+    "DIJANE",
+    "ROGÉRIO",
+    "LUIZ",
+    "MILTON",
+    "LUCIDALVA"
+];
