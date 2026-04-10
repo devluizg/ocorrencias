@@ -886,9 +886,16 @@
                 </div>
 
                 <!-- Description -->
-                <div class="form-group">
+                <div class="form-group" style="position: relative;">
                     <label class="form-label">Descrição (Opcional)</label>
-                    <textarea id="description" rows="3" class="form-textarea" placeholder="Descreva o ocorrido..."></textarea>
+                    <div style="position: relative;">
+                        <!-- x-webkit-speech ativa o ditado nativo do iOS/Android -->
+                        <textarea id="description" x-webkit-speech="x-webkit-speech" rows="3" class="form-textarea" placeholder="Descreva o ocorrido ou clique no microfone para ditar..."></textarea>
+                        <button type="button" id="mic-btn" onclick="toggleVoice()" style="position: absolute; right: 8px; bottom: 8px; width: 36px; height: 36px; border-radius: 50%; border: none; background: var(--surface-container-high); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">
+                            <span class="material-symbols-outlined" style="color: var(--primary);" id="mic-icon">mic</span>
+                        </button>
+                    </div>
+                    <p style="font-size: 0.625rem; color: var(--outline); margin-top: 0.25rem;">💡 Dica: no iPhone, clique no microfone ao lado do teclado para ditar</p>
                 </div>
 
                 <button type="submit" class="btn-primary" style="margin-top: 1.5rem;">
@@ -1028,6 +1035,63 @@
 
         function toggleMenu() {
             showToast('Menu em breve!');
+        }
+
+        // Reconhecimento de voz
+        let recognition = null;
+        let isRecording = false;
+
+        function toggleVoice() {
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                showToast('Seu navegador não suporta reconhecimento de voz');
+                return;
+            }
+
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            
+            if (!recognition) {
+                recognition = new SpeechRecognition();
+                recognition.lang = 'pt-BR';
+                recognition.interimResults = false;
+                recognition.maxAlternatives = 1;
+
+                recognition.onstart = function() {
+                    isRecording = true;
+                    document.getElementById('mic-icon').textContent = 'stop';
+                    document.getElementById('mic-btn').style.background = 'var(--tertiary-container)';
+                    showToast('Ouvindo...');
+                };
+
+                recognition.onend = function() {
+                    isRecording = false;
+                    document.getElementById('mic-icon').textContent = 'mic';
+                    document.getElementById('mic-btn').style.background = 'var(--surface-container-high)';
+                };
+
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    const textarea = document.getElementById('description');
+                    textarea.value = textarea.value ? textarea.value + ' ' + transcript : transcript;
+                };
+
+                recognition.onerror = function(event) {
+                    showToast('Erro no reconhecimento de voz');
+                    isRecording = false;
+                    document.getElementById('mic-icon').textContent = 'mic';
+                    document.getElementById('mic-btn').style.background = 'var(--surface-container-high)';
+                };
+            }
+
+            if (isRecording) {
+                recognition.stop();
+            } else {
+                try {
+                    recognition.start();
+                } catch (e) {
+                    recognition = null;
+                    toggleVoice();
+                }
+            }
         }
 
         async function loadConfig() {
