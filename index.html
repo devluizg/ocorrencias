@@ -708,6 +708,44 @@
             display: block;
         }
         
+        /* Autocomplete */
+        .autocomplete-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--surface-container-lowest);
+            border-radius: 0.75rem;
+            box-shadow: var(--shadow-lg);
+            max-height: 240px;
+            overflow-y: auto;
+            z-index: 50;
+            display: none;
+        }
+        
+        .autocomplete-list.show {
+            display: block;
+        }
+        
+        .autocomplete-item {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            border-bottom: 1px solid var(--surface-container-high);
+            transition: background 0.2s;
+        }
+        
+        .autocomplete-item:last-child {
+            border-bottom: none;
+        }
+        
+        .autocomplete-item:hover {
+            background: var(--secondary-container);
+        }
+        
+        .autocomplete-item strong {
+            color: var(--primary);
+        }
+        
         @keyframes slideUp {
             from { transform: translateX(-50%) translateY(20px); opacity: 0; }
             to { transform: translateX(-50%) translateY(0); opacity: 1; }
@@ -743,15 +781,8 @@
             <p class="page-subtitle">Registre incidentes com agilidade.</p>
 
             <form id="occurrence-form">
-                <!-- Student & Class -->
+                <!-- Turma e Student -->
                 <div class="card">
-                    <div class="form-group">
-                        <label class="form-label">Estudante</label>
-                        <div class="input-icon-wrapper">
-                            <input id="student-name" required type="text" class="form-input" placeholder="Digite o nome do aluno...">
-                            <span class="material-symbols-outlined">search</span>
-                        </div>
-                    </div>
                     <div class="form-group">
                         <label class="form-label">Série / Turma</label>
                         <select id="class" required class="form-select">
@@ -767,6 +798,14 @@
                             <option value="301">301</option>
                             <option value="302">302</option>
                         </select>
+                    </div>
+                    <div class="form-group" style="position: relative;">
+                        <label class="form-label">Estudante</label>
+                        <div class="input-icon-wrapper">
+                            <input id="student-name" required type="text" class="form-input" placeholder="Digite o nome do aluno..." autocomplete="off">
+                            <span class="material-symbols-outlined">search</span>
+                        </div>
+                        <div id="autocomplete-list" class="autocomplete-list"></div>
                     </div>
                 </div>
 
@@ -1023,6 +1062,75 @@
         }
 
         function setupForm() {
+            // Carregar listas de alunos
+            let listasAlunos = {};
+            
+            async function loadAlunosList() {
+                const turmas = ['101', '102', '103', '104', '201', '202', '203', '204', '301', '302'];
+                for (const turma of turmas) {
+                    try {
+                        const response = await fetch(`/ocorrencias/js/alunos/${turma}.js`);
+                        if (response.ok) {
+                            const script = document.createElement('script');
+                            script.text = await response.text();
+                            document.head.appendChild(script);
+                            listasAlunos[turma] = eval(`alunos${turma}`);
+                        }
+                    } catch (e) {}
+                }
+            }
+            loadAlunosList();
+
+            // Autocomplete
+            const studentInput = document.getElementById('student-name');
+            const autocompleteList = document.getElementById('autocomplete-list');
+            const classSelect = document.getElementById('class');
+            
+            studentInput.addEventListener('input', function() {
+                const val = this.value.toUpperCase();
+                const turma = classSelect.value;
+                
+                autocompleteList.innerHTML = '';
+                
+                if (!val || !turma || !listasAlunos[turma]) {
+                    autocompleteList.classList.remove('show');
+                    return;
+                }
+                
+                const matches = listasAlunos[turma].filter(aluno => 
+                    aluno.includes(val)
+                );
+                
+                if (matches.length === 0) {
+                    autocompleteList.classList.remove('show');
+                    return;
+                }
+                
+                matches.slice(0, 8).forEach(aluno => {
+                    const div = document.createElement('div');
+                    div.className = 'autocomplete-item';
+                    div.innerHTML = aluno.replace(new RegExp(`(${val})`, 'gi'), '<strong>$1</strong>');
+                    div.addEventListener('click', () => {
+                        studentInput.value = aluno;
+                        autocompleteList.classList.remove('show');
+                    });
+                    autocompleteList.appendChild(div);
+                });
+                
+                autocompleteList.classList.add('show');
+            });
+
+            document.addEventListener('click', function(e) {
+                if (e.target !== studentInput) {
+                    autocompleteList.classList.remove('show');
+                }
+            });
+
+            classSelect.addEventListener('change', function() {
+                autocompleteList.classList.remove('show');
+                studentInput.value = '';
+            });
+
             document.querySelectorAll('.type-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
@@ -1063,6 +1171,7 @@
             document.getElementById('clear-form').addEventListener('click', () => {
                 form.reset();
                 document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+                autocompleteList.classList.remove('show');
             });
         }
 
