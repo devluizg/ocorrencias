@@ -807,6 +807,16 @@
                         </div>
                         <div id="autocomplete-list" class="autocomplete-list"></div>
                     </div>
+                    
+                    <!-- Responsible -->
+                    <div class="responsible-box" style="margin-top: 1rem;">
+                        <span class="material-symbols-outlined">account_circle</span>
+                        <div class="responsible-info" style="position: relative; flex: 1;">
+                            <div class="responsible-label">Professor Responsável</div>
+                            <input id="teacher" required type="text" class="responsible-name" placeholder="Seu nome" style="background: transparent; border: none; outline: none; width: 100%;">
+                            <div id="teacher-autocomplete" class="autocomplete-list" style="top: 100%;"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Severity -->
@@ -879,16 +889,6 @@
                 <div class="form-group">
                     <label class="form-label">Descrição (Opcional)</label>
                     <textarea id="description" rows="3" class="form-textarea" placeholder="Descreva o ocorrido..."></textarea>
-                </div>
-
-                <!-- Responsible -->
-                <div class="responsible-box">
-                    <span class="material-symbols-outlined">account_circle</span>
-                    <div class="responsible-info" style="position: relative; flex: 1;">
-                        <div class="responsible-label">Professor Responsável</div>
-                        <input id="teacher" required type="text" class="responsible-name" placeholder="Seu nome" style="background: transparent; border: none; outline: none; width: 100%;">
-                        <div id="teacher-autocomplete" class="autocomplete-list" style="top: 100%;"></div>
-                    </div>
                 </div>
 
                 <button type="submit" class="btn-primary" style="margin-top: 1.5rem;">
