@@ -940,11 +940,40 @@
             <h2 class="page-title">Relatórios</h2>
 
             <div class="card">
-                <label class="form-label">Buscar Aluno</label>
-                <input type="text" id="search-student" class="form-input" placeholder="Digite o nome do aluno...">
+                <div class="form-group">
+                    <label class="form-label">Filtrar por Data</label>
+                    <div class="filter-row">
+                        <input type="date" id="report-date-start" class="filter-input" placeholder="De">
+                        <input type="date" id="report-date-end" class="filter-input" placeholder="Até">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Filtrar por Turma</label>
+                    <select id="report-class" class="form-select" style="height: 48px;">
+                        <option value="">Todas as turmas</option>
+                        <option value="101">101</option>
+                        <option value="102">102</option>
+                        <option value="103">103</option>
+                        <option value="104">104</option>
+                        <option value="201">201</option>
+                        <option value="202">202</option>
+                        <option value="203">203</option>
+                        <option value="204">204</option>
+                        <option value="301">301</option>
+                        <option value="302">302</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Filtrar por Aluno</label>
+                    <input type="text" id="report-student" class="form-input" placeholder="Nome do aluno...">
+                </div>
+                <button type="button" id="btn-gerar-relatorio" class="btn-primary">
+                    <span class="material-symbols-outlined">description</span>
+                    Gerar Relatório
+                </button>
             </div>
 
-            <div id="student-report"></div>
+            <div id="report-result"></div>
         </section>
     </main>
 
@@ -1299,68 +1328,129 @@
             document.getElementById('close-modal').addEventListener('click', () => {
                 document.getElementById('student-modal').classList.remove('show');
             });
-
-            document.getElementById('search-student').addEventListener('input', (e) => {
-                const name = e.target.value.trim().toLowerCase();
-                if (name.length < 2) {
-                    document.getElementById('student-report').innerHTML = '';
-                    return;
-                }
-                const studentOccurrences = occurrences.filter(o => o.studentName.toLowerCase().includes(name));
-                renderStudentReport(studentOccurrences, name);
-            });
         }
 
-        function renderStudentReport(studentOccurrences, searchName) {
-            const container = document.getElementById('student-report');
-            if (studentOccurrences.length === 0) {
-                container.innerHTML = '<div class="empty-state"><p>Nenhum aluno encontrado</p></div>';
+        function setupRelatorios() {
+            document.getElementById('btn-gerar-relatorio').addEventListener('click', gerarRelatorio);
+        }
+
+        function gerarRelatorio() {
+            const dateStart = document.getElementById('report-date-start').value;
+            const dateEnd = document.getElementById('report-date-end').value;
+            const classFilter = document.getElementById('report-class').value;
+            const studentFilter = document.getElementById('report-student').value.toLowerCase();
+
+            let filtered = occurrences.filter(o => {
+                if (dateStart && o.date < dateStart) return false;
+                if (dateEnd && o.date > dateEnd + 'T23:59:59') return false;
+                if (classFilter && o.class !== classFilter) return false;
+                if (studentFilter && !o.studentName.toLowerCase().includes(studentFilter)) return false;
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                document.getElementById('report-result').innerHTML = '<div class="empty-state"><p>Nenhuma ocorrência encontrada com os filtros selecionados</p></div>';
                 return;
             }
 
             const counts = { Leve: 0, Médio: 0, Grave: 0 };
-            studentOccurrences.forEach(o => counts[o.gravity]++);
+            filtered.forEach(o => counts[o.gravity]++);
 
             const grouped = {};
-            studentOccurrences.forEach(o => {
-                const key = o.studentName.toLowerCase();
-                if (!grouped[key]) grouped[key] = [];
-                grouped[key].push(o);
+            filtered.forEach(o => {
+                if (!grouped[o.studentName]) grouped[o.studentName] = [];
+                grouped[o.studentName].push(o);
             });
 
-            container.innerHTML = Object.entries(grouped).map(([name, items]) => `
-                <div class="card">
-                    <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 0.25rem;">${items[0].studentName}</h3>
-                    <p style="color: var(--on-surface-variant); font-size: 0.875rem; margin-bottom: 1rem;">${items[0].class}</p>
-                    <div class="stats-grid">
-                        <div class="stat-card leve">
-                            <span class="stat-number">${counts.Leve}</span>
-                            <span class="stat-label">Leve</span>
+            document.getElementById('report-result').innerHTML = `
+                <div class="card" style="background: var(--primary-container); margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span style="color: var(--primary); font-weight: 700; font-size: 1.5rem;">${filtered.length}</span>
+                            <span style="color: var(--on-primary);"> ocorrências</span>
                         </div>
-                        <div class="stat-card medio">
-                            <span class="stat-number">${counts.Médio}</span>
-                            <span class="stat-label">Médio</span>
+                        <button onclick="exportarPDF()" class="btn-primary" style="width: auto; height: 40px; padding: 0 1rem; font-size: 0.875rem;">
+                            <span class="material-symbols-outlined" style="font-size: 1.25rem;">download</span>
+                            PDF
+                        </button>
+                    </div>
+                    <div class="stats-grid" style="margin-top: 1rem;">
+                        <div class="stat-card" style="background: rgba(255,255,255,0.3);">
+                            <span class="stat-number" style="color: var(--primary);">${counts.Leve}</span>
+                            <span class="stat-label" style="color: var(--primary);">Leve</span>
                         </div>
-                        <div class="stat-card grave">
-                            <span class="stat-number">${counts.Grave}</span>
-                            <span class="stat-label">Grave</span>
+                        <div class="stat-card" style="background: rgba(255,255,255,0.3);">
+                            <span class="stat-number" style="color: var(--on-primary);">${counts.Médio}</span>
+                            <span class="stat-label" style="color: var(--on-primary);">Médio</span>
+                        </div>
+                        <div class="stat-card" style="background: rgba(255,255,255,0.3);">
+                            <span class="stat-number" style="color: var(--tertiary);">${counts.Grave}</span>
+                            <span class="stat-label" style="color: var(--on-primary);">Grave</span>
                         </div>
                     </div>
-                    <div class="timeline">
+                </div>
+                <div class="card">
+                    <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 1rem;">Ocorrências</h3>
+                    <div style="font-size: 0.75rem; color: var(--outline); margin-bottom: 0.5rem;">
+                        ${dateStart || dateEnd ? `Período: ${dateStart || '-'} até ${dateEnd || '-'}` : ''}
+                        ${classFilter ? ` | Turma: ${classFilter}` : ''}
+                        ${studentFilter ? ` | Aluno: ${studentFilter}` : ''}
+                    </div>
+                </div>
+                ${Object.entries(grouped).sort((a,b) => b[1].length - a[1].length).map(([name, items]) => `
+                    <div class="card">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <span style="font-weight: 700;">${name}</span>
+                                <span style="color: var(--on-surface-variant); font-size: 0.875rem; margin-left: 0.5rem;">${items[0].class}</span>
+                            </div>
+                            <span class="badge badge-${items[0].gravity.toLowerCase()}">${items.length}</span>
+                        </div>
                         ${items.map(o => `
-                            <div class="timeline-item">
-                                <div class="timeline-card">
-                                    <div class="timeline-header">
-                                        <span style="font-weight: 600;">${o.type}</span>
-                                        <span class="timeline-date">${formatDate(o.date)}</span>
-                                    </div>
-                                    <div class="timeline-teacher">${o.teacher}</div>
+                            <div style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--surface-container-high);">
+                                <div style="display: flex; justify-content: space-between; font-size: 0.875rem;">
+                                    <span>${o.type}</span>
+                                    <span style="color: var(--outline);">${formatDate(o.date)}</span>
+                                </div>
+                                <div style="font-size: 0.75rem; color: var(--outline); margin-top: 0.25rem;">
+                                    ${o.teacher} | <span class="badge badge-${o.gravity.toLowerCase()}" style="font-size: 0.625rem;">${o.gravity}</span>
                                 </div>
                             </div>
                         `).join('')}
                     </div>
-                </div>
-            `).join('');
+                `).join('')}
+            `;
+        }
+
+        function exportarPDF() {
+            const content = document.getElementById('report-result').innerHTML;
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Relatório de Ocorrências</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        h1 { color: #0040a1; }
+                        .header { display: flex; justify-content: space-between; margin-bottom: 20px; }
+                        .card { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 8px; }
+                        .badge { padding: 2px 8px; border-radius: 12px; font-size: 12px; }
+                        .badge-leve { background: #dcfce7; color: #166534; }
+                        .badge-medio { background: #fef3c7; color: #92400e; }
+                        .badge-grave { background: #fee2e2; color: #991b1b; }
+                        @media print { body { -webkit-print-color-adjust: exact; } }
+                    </style>
+                </head>
+                <body>
+                    <h1>Relatório de Ocorrências</h1>
+                    <div style="color: #666; margin-bottom: 20px;">Gerado em ${new Date().toLocaleDateString('pt-BR')}</div>
+                    ${content.replace(/class="card"/g, 'class="card"')}
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
         }
 
         async function init() {
@@ -1372,6 +1462,7 @@
             setupForm();
             setupFilters();
             setupModal();
+            setupRelatorios();
             loadOccurrences();
         }
 
