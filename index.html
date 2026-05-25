@@ -751,6 +751,15 @@
             to { transform: translateX(-50%) translateY(0); opacity: 1; }
         }
 
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .animate-spin {
+            animation: spin 1s linear infinite;
+        }
+
         @media (min-width: 480px) {
             main, .header-content {
                 max-width: 480px;
@@ -910,7 +919,13 @@
 
         <!-- OCORRÊNCIAS -->
         <section id="ocorrencias" class="tab-content">
-            <h2 class="page-title">Todas as Ocorrências</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.25rem;">
+                <h2 class="page-title" style="margin-bottom: 0;">Todas as Ocorrências</h2>
+                <button type="button" onclick="confirmDeleteAll()" class="btn-secondary" style="width: auto; height: 36px; padding: 0 1rem; color: var(--error); background: rgba(186, 26, 26, 0.1); display: flex; align-items: center; gap: 0.5rem;">
+                    <span class="material-symbols-outlined" style="font-size: 1.125rem;">delete</span>
+                    Excluir Todas
+                </button>
+            </div>
 
             <div class="card">
                 <div class="filter-row">
@@ -1411,6 +1426,7 @@
                 if (studentFilter && !o.studentName.toLowerCase().includes(studentFilter)) return false;
                 return true;
             });
+            window.currentReportData = filtered;
 
             if (filtered.length === 0) {
                 document.getElementById('report-result').innerHTML = '<div class="empty-state"><p>Nenhuma ocorrência encontrada com os filtros selecionados</p></div>';
@@ -1427,29 +1443,40 @@
             });
 
             document.getElementById('report-result').innerHTML = `
-                <div class="card" style="background: var(--primary-container); margin-bottom: 1rem;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div class="card" style="
+                    background: #0040a1;
+                    border-radius: 16px;
+                    padding: 1.25rem;
+                    margin-bottom: 1rem;
+                    border: none;
+                ">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem;">
                         <div>
-                            <span style="color: var(--primary); font-weight: 700; font-size: 1.5rem;">${filtered.length}</span>
-                            <span style="color: var(--on-primary);"> ocorrências</span>
+                            <div style="font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.6); margin-bottom: 4px;">Total de ocorrências</div>
+                            <div style="font-size: 2rem; font-weight: 800; color: #fff; line-height: 1; font-family: 'Manrope', sans-serif;">${filtered.length}</div>
+                            <div style="font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 4px;">Resultado filtrado</div>
                         </div>
-                        <button onclick="exportarPDF()" class="btn-primary" style="width: auto; height: 40px; padding: 0 1rem; font-size: 0.875rem;">
-                            <span class="material-symbols-outlined" style="font-size: 1.25rem;">download</span>
+                        <button onclick="exportarPDF()" style="display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); border-radius: 8px; padding: 8px 14px; color: #fff; font-size: 13px; font-weight: 600; cursor: pointer;">
+                            <span class="material-symbols-outlined" style="font-size: 16px;">download</span>
                             PDF
                         </button>
                     </div>
-                    <div class="stats-grid" style="margin-top: 1rem;">
-                        <div class="stat-card" style="background: rgba(255,255,255,0.3);">
-                            <span class="stat-number" style="color: var(--primary);">${counts.Leve}</span>
-                            <span class="stat-label" style="color: var(--primary);">Leve</span>
+                    <div style="height: 1px; background: rgba(255,255,255,0.15); margin-bottom: 1.25rem;"></div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
+                        <div style="background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px 8px; text-align: center;">
+                            <div style="width: 8px; height: 8px; border-radius: 50%; background: #93c5fd; margin: 0 auto 8px;"></div>
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #bfdbfe; font-family: 'Manrope', sans-serif;">${counts.Leve}</div>
+                            <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.55); margin-top: 4px;">Leve</div>
                         </div>
-                        <div class="stat-card" style="background: rgba(255,255,255,0.3);">
-                            <span class="stat-number" style="color: var(--on-primary);">${counts.Médio}</span>
-                            <span class="stat-label" style="color: var(--on-primary);">Médio</span>
+                        <div style="background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px 8px; text-align: center;">
+                            <div style="width: 8px; height: 8px; border-radius: 50%; background: #fbbf24; margin: 0 auto 8px;"></div>
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #fde68a; font-family: 'Manrope', sans-serif;">${counts.Médio}</div>
+                            <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.55); margin-top: 4px;">Médio</div>
                         </div>
-                        <div class="stat-card" style="background: rgba(255,255,255,0.3);">
-                            <span class="stat-number" style="color: var(--tertiary);">${counts.Grave}</span>
-                            <span class="stat-label" style="color: var(--on-primary);">Grave</span>
+                        <div style="background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px 8px; text-align: center;">
+                            <div style="width: 8px; height: 8px; border-radius: 50%; background: #f87171; margin: 0 auto 8px;"></div>
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #fca5a5; font-family: 'Manrope', sans-serif;">${counts.Grave}</div>
+                            <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255,255,255,0.55); margin-top: 4px;">Grave</div>
                         </div>
                     </div>
                 </div>
@@ -1487,34 +1514,101 @@
         }
 
         function exportarPDF() {
-            const content = document.getElementById('report-result').innerHTML;
+            const filtered = window.currentReportData || [];
+            if (filtered.length === 0) return;
+
+            const grouped = {};
+            filtered.forEach(o => {
+                if (!grouped[o.studentName]) grouped[o.studentName] = [];
+                grouped[o.studentName].push(o);
+            });
+
+            let content = '';
+            Object.entries(grouped).sort((a,b) => b[1].length - a[1].length).forEach(([name, items]) => {
+                content += `
+                    <div class="card">
+                        <div class="student-header">
+                            <strong>${name}</strong> - Turma ${items[0].class}
+                        </div>
+                        <ul class="occurrence-list">
+                            ${items.map(o => `
+                                <li>
+                                    <div class="occurrence-info">
+                                        <strong>Ocorrência:</strong> ${o.type} &nbsp;|&nbsp; <strong>Data/Hora:</strong> ${formatDate(o.date)}<br>
+                                        <strong>Professor:</strong> ${o.teacher}<br>
+                                        ${o.description ? `<strong>Relato:</strong> ${o.description}` : ''}
+                                    </div>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `;
+            });
+
             const printWindow = window.open('', '_blank');
             printWindow.document.write(`
                 <!DOCTYPE html>
                 <html>
                 <head>
-                    <title>Relatório de Ocorrências</title>
+                    <title>Relatório Disciplinar</title>
                     <style>
-                        body { font-family: Arial, sans-serif; padding: 20px; }
-                        h1 { color: #0040a1; }
-                        .header { display: flex; justify-content: space-between; margin-bottom: 20px; }
-                        .card { border: 1px solid #ddd; padding: 15px; margin-bottom: 15px; border-radius: 8px; }
-                        .badge { padding: 2px 8px; border-radius: 12px; font-size: 12px; }
-                        .badge-leve { background: #dcfce7; color: #166534; }
-                        .badge-medio { background: #fef3c7; color: #92400e; }
-                        .badge-grave { background: #fee2e2; color: #991b1b; }
-                        @media print { body { -webkit-print-color-adjust: exact; } }
+                        body { font-family: 'Public Sans', Arial, sans-serif; padding: 20px; color: #191c1d; background: #fff; }
+                        h1 { color: #0040a1; text-align: center; border-bottom: 2px solid #0040a1; padding-bottom: 10px; margin-bottom: 30px; font-family: 'Manrope', sans-serif; }
+                        .card { border: 1px solid #e1e3e4; margin-bottom: 25px; border-radius: 8px; padding: 20px; page-break-inside: avoid; }
+                        .student-header { font-size: 18px; margin-bottom: 15px; background: #f3f4f5; padding: 12px; border-radius: 6px; }
+                        .occurrence-list { list-style-type: none; padding-left: 0; margin: 0; }
+                        .occurrence-list li { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #f3f4f5; }
+                        .occurrence-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+                        .occurrence-info { line-height: 1.5; font-size: 14px; }
+                        @media print { 
+                            body { -webkit-print-color-adjust: exact; padding: 0; } 
+                            .card { border-color: #ccc; }
+                        }
                     </style>
                 </head>
                 <body>
-                    <h1>Relatório de Ocorrências</h1>
-                    <div style="color: #666; margin-bottom: 20px;">Gerado em ${new Date().toLocaleDateString('pt-BR')}</div>
-                    ${content.replace(/class="card"/g, 'class="card"')}
+                    <h1>Relatório Disciplinar</h1>
+                    ${content}
                 </body>
                 </html>
             `);
             printWindow.document.close();
-            printWindow.print();
+            setTimeout(() => { printWindow.print(); }, 250);
+        }
+
+        async function confirmDeleteAll() {
+            if (occurrences.length === 0) {
+                showToast('Nenhuma ocorrência para excluir.');
+                return;
+            }
+            if (confirm('Tem certeza que deseja excluir TODAS as ocorrências salvas? Esta ação é irreversível.')) {
+                const btn = document.querySelector('button[onclick="confirmDeleteAll()"]');
+                const originalHtml = btn.innerHTML;
+                btn.innerHTML = '<span class="material-symbols-outlined animate-spin">sync</span> Excluindo...';
+                btn.disabled = true;
+
+                if (dbClient) {
+                    const { error } = await dbClient.from('occurrences').delete().not('id', 'is', null);
+                    if (error) {
+                        const ids = occurrences.map(o => o.id);
+                        const { error: error2 } = await dbClient.from('occurrences').delete().in('id', ids.slice(0, 100));
+                        if (error2) {
+                            showToast('Erro ao excluir do banco!');
+                            btn.innerHTML = originalHtml;
+                            btn.disabled = false;
+                            return;
+                        }
+                    }
+                }
+                
+                occurrences = [];
+                localStorage.removeItem(STORAGE_KEY);
+                renderOccurrences();
+                showToast('Todas as ocorrências foram excluídas!');
+                
+                btn.innerHTML = originalHtml;
+                btn.disabled = false;
+            }
         }
 
         async function init() {
